@@ -194,7 +194,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -206,7 +206,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
 
   /* Prevent text highlighting during drag/swipe */
   .review-card {
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
@@ -257,21 +257,45 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
     let resumeTimeout = null;
 
     // Gentle auto-drift speed (pixels per frame)
-    const driftSpeed = 0.55;
+    const driftSpeed = 0.65;
+    let scrollPos = container.scrollLeft;
 
-    // Seamless infinite looping RAF
+    // Start with an offset so the user can swipe left OR right immediately
+    const quarterWidth = track.scrollWidth / 4;
+    if (container.scrollLeft === 0 && quarterWidth > 0) {
+      container.scrollLeft = quarterWidth;
+      scrollPos = quarterWidth;
+    }
+
+    // Continuous auto-drift loop
     let rafId = null;
     function drift() {
-      if (!isPaused && !isInteracting) {
-        container.scrollLeft += driftSpeed;
+      if (!isPaused && !isInteracting && !currentExpandedCard) {
+        scrollPos += driftSpeed;
         const halfWidth = track.scrollWidth / 2;
-        if (container.scrollLeft >= halfWidth) {
-          container.scrollLeft -= halfWidth;
+        if (halfWidth > 0 && scrollPos >= halfWidth * 1.5) {
+          scrollPos -= halfWidth;
         }
+        container.scrollLeft = scrollPos;
       }
       rafId = requestAnimationFrame(drift);
     }
     rafId = requestAnimationFrame(drift);
+
+    // Keep scrollPos synced with user scroll / swipe
+    container.addEventListener('scroll', () => {
+      scrollPos = container.scrollLeft;
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth > 0) {
+        if (container.scrollLeft >= halfWidth * 1.5) {
+          container.scrollLeft -= halfWidth;
+          scrollPos = container.scrollLeft;
+        } else if (container.scrollLeft <= 50) {
+          container.scrollLeft += halfWidth;
+          scrollPos = container.scrollLeft;
+        }
+      }
+    }, { passive: true });
 
     // Track finger / mouse gestures
     let isPointerDown = false;
@@ -280,10 +304,12 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
     let hasDragged = false;
 
     container.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
       isPointerDown = true;
       hasDragged = false;
       startX = e.clientX;
       scrollStart = container.scrollLeft;
+      scrollPos = container.scrollLeft;
       isInteracting = true;
       if (resumeTimeout) clearTimeout(resumeTimeout);
     });
@@ -297,28 +323,27 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
       // Mouse drag scroll on desktop
       if (e.pointerType === 'mouse' && hasDragged) {
         container.scrollLeft = scrollStart - dx;
+        scrollPos = container.scrollLeft;
       }
     });
 
     const handlePointerEnd = () => {
       if (!isPointerDown) return;
       isPointerDown = false;
+      scrollPos = container.scrollLeft;
 
-      // Wrap check on manual swipe
-      const halfWidth = track.scrollWidth / 2;
-      if (container.scrollLeft >= halfWidth) {
-        container.scrollLeft -= halfWidth;
-      } else if (container.scrollLeft <= 0) {
-        container.scrollLeft += halfWidth;
+      // If a review is currently expanded, STAY PAUSED so user can reposition it freely!
+      if (currentExpandedCard) {
+        isPaused = true;
+        isInteracting = true;
+        return;
       }
 
-      // Resume auto-drift if no review is open
-      if (!currentExpandedCard) {
-        if (resumeTimeout) clearTimeout(resumeTimeout);
-        resumeTimeout = setTimeout(() => {
-          isInteracting = false;
-        }, 1500);
-      }
+      // If no review is expanded, resume auto-drift after a brief pause
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        isInteracting = false;
+      }, 1200);
     };
 
     container.addEventListener('pointerup', handlePointerEnd);
@@ -327,17 +352,23 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
       if (e.pointerType === 'mouse') handlePointerEnd();
     });
 
-    // Touch inertia / wheel listener
-    container.addEventListener('scroll', () => {
-      if (isPointerDown) {
-        isInteracting = true;
-      }
-    }, { passive: true });
+    // Helper: close expanded card and resume moving
+    function closeExpandedCard() {
+      if (!currentExpandedCard) return;
+      currentExpandedCard.classList.remove('is-expanded');
+      currentExpandedCard.setAttribute('aria-expanded', 'false');
+      currentExpandedCard = null;
+      isPaused = false;
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        isInteracting = false;
+      }, 800);
+    }
 
     // Review card click / tap
     cards.forEach((card) => {
       card.addEventListener('click', (e) => {
-        // If the user was dragging/swiping with their finger, do not toggle the card!
+        // If the user was swiping or dragging to reposition, ignore click!
         if (hasDragged) {
           hasDragged = false;
           return;
@@ -346,31 +377,26 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
         e.stopPropagation();
 
         if (card.classList.contains('is-expanded')) {
-          // Collapse card and resume drift
-          card.classList.remove('is-expanded');
-          card.setAttribute('aria-expanded', 'false');
-          currentExpandedCard = null;
-          isPaused = false;
-          if (resumeTimeout) clearTimeout(resumeTimeout);
-          resumeTimeout = setTimeout(() => {
-            isInteracting = false;
-          }, 1200);
+          // Tapping an open card closes it and starts moving again!
+          closeExpandedCard();
         } else {
-          // Collapse any previously open card
+          // Close any previous card
           if (currentExpandedCard && currentExpandedCard !== card) {
             currentExpandedCard.classList.remove('is-expanded');
             currentExpandedCard.setAttribute('aria-expanded', 'false');
           }
 
-          // Expand this card
+          // Expand selected card and STOP movement completely
           card.classList.add('is-expanded');
           card.setAttribute('aria-expanded', 'true');
           currentExpandedCard = card;
           isPaused = true;
           isInteracting = true;
+          if (resumeTimeout) clearTimeout(resumeTimeout);
 
-          // Smoothly center the expanded card in the container so it's never cut off
+          // Smoothly center the expanded card in the container so it's not cut off
           setTimeout(() => {
+            if (currentExpandedCard !== card) return;
             const containerWidth = container.clientWidth;
             const cardWidth = card.offsetWidth;
             const target = card.offsetLeft - (containerWidth - cardWidth) / 2;
@@ -378,22 +404,16 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
               left: Math.max(0, target),
               behavior: 'smooth'
             });
+            scrollPos = Math.max(0, target);
           }, 60);
         }
       });
     });
 
-    // Tap outside to collapse
+    // Tap outside anywhere to close open review and resume movement
     document.addEventListener('click', (e) => {
       if (currentExpandedCard && !track.contains(e.target)) {
-        currentExpandedCard.classList.remove('is-expanded');
-        currentExpandedCard.setAttribute('aria-expanded', 'false');
-        currentExpandedCard = null;
-        isPaused = false;
-        if (resumeTimeout) clearTimeout(resumeTimeout);
-        resumeTimeout = setTimeout(() => {
-          isInteracting = false;
-        }, 1200);
+        closeExpandedCard();
       }
     });
   }
