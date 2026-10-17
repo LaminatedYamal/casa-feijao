@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { rooms } from '../../data/rooms';
+---
+
+<BaseLayout
+  title="Acomodações • Estúdio, Apartamento T1 e T3 • Casa Feijão Gerês"
+  description="Compare as nossas três opções de alojamento no Gerês: Estúdio de montanha desde 70€, Apartamento T1 com lareira desde 80€ e Apartamento T3 familiar desde 180€. Cozinhas completas e vistas deslumbrantes."
+  lang="pt"
+>
+  <!-- Hero Section -->
+  <section class="py-12 sm:py-16 bg-gradient-to-b from-[#FAFBFD] to-white border-b border-cobalt-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Acomodações' }]} lang="pt" className="mb-6" />
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-cobalt-950 tracking-tight">
+          Acomodações no Coração do Gerês
+        </h1>
+      <p class="mt-4 text-sm sm:text-base text-granite-600 leading-relaxed font-sans">
+        Três tipologias independentes pensadas para casais, famílias e grupos. Todas as unidades são autónomas, com cozinha privativa equipada, aquecimento central, roupa de cama e toalhas incluídas.
+      </p>
+
+        <!-- Key badges -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mt-6 text-xs text-cobalt-900 font-semibold">
+          <span class="px-3 py-1 rounded-full bg-white border border-cobalt-200 shadow-2xs">✓ Roupa de cama & toalhas incluídas</span>
+          <span class="px-3 py-1 rounded-full bg-white border border-cobalt-200 shadow-2xs">✓ Wi-Fi & Estacionamento gratuito</span>
+          <span class="px-3 py-1 rounded-full bg-white border border-cobalt-200 shadow-2xs">✓ A 6 min a pé da praia fluvial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+    <!-- ROOMS GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {rooms.map((room) => (
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border-2 border-cobalt-100 hover:border-cobalt-300 shadow-tile hover:shadow-tile-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <!-- Image with Price Badge -->
+            <div class="relative h-64 overflow-hidden">
+              <img
+                src={room.featuredImage}
+                alt={room.titlePt}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#0B357B] border border-cobalt-100 shadow-xs">
+                {room.viewsPt.split(',')[0]}
+              </div>
+              <div class="absolute bottom-4 right-4 bg-[#0B357B] text-white px-4 py-1.5 rounded-xl text-xs font-sans font-semibold shadow-md">
+                desde <span class="text-base text-amber-300 font-bold">{room.pricePerNight}€</span> / noite
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 sm:p-8 space-y-4">
+              <div class="flex items-start justify-between gap-3">
+                <h2 class="text-2xl font-serif font-black text-cobalt-950 group-hover:text-[#0B357B] transition-colors leading-tight">
+                  {room.titlePt}
+                </h2>
+                {room.area && (
+                  <span class="shrink-0 whitespace-nowrap text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-cobalt-50 border border-cobalt-200/90 text-[#0B357B] mt-0.5 shadow-2xs">
+                    {room.area}
+                  </span>
+                )}
+              </div>
+
+              <p class="text-xs font-semibold text-cobalt-700 flex items-center gap-1.5">
+                <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                  <path d="M208,80H48V56a8,8,0,0,0-16,0V200a8,8,0,0,0,16,0V176H224v24a8,8,0,0,0,16,0V112A32,32,0,0,0,208,80ZM48,96H104v64H48Zm176,64H120V96h88a16,16,0,0,1,16,16Z"/>
+                </svg>
+                <span>{room.capacity.bedsPt} • até {room.capacity.adults + room.capacity.children} pessoas</span>
+              </p>
+
+              <p class="text-xs text-granite-600 leading-relaxed">
+                {room.descriptionPt}
+              </p>
+
+              <!-- Highlights -->
+              <div class="pt-2 border-t border-cobalt-100/80 space-y-2">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-granite-400 font-bold block">
+                  Destaques da Unidade:
+                </span>
+                <ul class="space-y-1.5 text-xs text-granite-700">
+                  {room.highlightsPt.map((hl) => (
+                    <li class="flex items-center gap-2">
+                      <span class="text-emerald-600 font-bold">✓</span>
+                      <span>{hl}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action -->
+          <div class="p-6 sm:p-8 pt-0 space-y-2">
+            <a
+              href={`/acomodacoes/${room.slug}`}
+              class="block w-full py-3 text-center rounded-xl bg-[#0B357B] hover:bg-cobalt-900 text-white text-xs font-bold uppercase tracking-wider shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Ver Galeria Completa & Reservar →
+            </a>
+            <a
+              href={`/contactos?quarto=${room.slug}#reserva`}
+              class="block w-full py-2 text-center rounded-xl bg-white border border-cobalt-200 hover:bg-cobalt-50 text-[#0B357B] text-xs font-semibold transition-colors"
+            >
+              Pedir Disponibilidade Direta
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- SIDE-BY-SIDE COMPARISON TABLE -->
+    <section class="bg-white rounded-3xl border border-cobalt-100 p-6 sm:p-10 shadow-tile overflow-hidden">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <h2 class="text-2xl sm:text-3xl font-serif font-black text-cobalt-950">
+          Tabela Comparativa de Acomodações
+        </h2>
+        <p class="text-xs sm:text-sm text-granite-500 mt-2">
+          Compare as características para escolher a acomodação perfeita para a sua estadia
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b-2 border-cobalt-200 bg-[#FAFBFD]">
+              <th class="p-4 font-serif font-bold text-sm text-[#0B357B]">Comodidade / Especificação</th>
+              <th class="p-4 font-serif font-bold text-sm text-cobalt-950 text-center">Estúdio</th>
+              <th class="p-4 font-serif font-bold text-sm text-cobalt-950 text-center">Apartamento T1</th>
+              <th class="p-4 font-serif font-bold text-sm text-cobalt-950 text-center">Apartamento T3</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-cobalt-100">
+            <tr>
+              <td class="p-4 font-semibold text-granite-800">Preço Base por Noite</td>
+              <td class="p-4 text-center font-mono font-bold text-[#0B357B] text-sm">desde 70€</td>
+              <td class="p-4 text-center font-mono font-bold text-[#0B357B] text-sm">desde 80€</td>
+              <td class="p-4 text-center font-mono font-bold text-[#0B357B] text-sm">desde 180€</td>
+            </tr>
+            <tr class="bg-cobalt-50/30">
+              <td class="p-4 font-semibold text-granite-800">Área Privativa</td>
+              <td class="p-4 text-center font-mono text-granite-600">Espaço aberto</td>
+              <td class="p-4 text-center font-mono font-bold text-cobalt-950">40 m²</td>
+              <td class="p-4 text-center font-mono font-bold text-cobalt-950">70 m²</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-granite-800">Capacidade de Quartos</td>
+              <td class="p-4 text-center text-granite-600">1 Cama Casal + Sofá-cama</td>
+              <td class="p-4 text-center text-granite-600">1 Quarto Casal + Sofá-cama</td>
+              <td class="p-4 text-center font-semibold text-cobalt-950">3 Quartos Casal + Sofá-cama</td>
+            </tr>
+            <tr class="bg-cobalt-50/30">
+              <td class="p-4 font-semibold text-granite-800">Lareira Tradicional</td>
+              <td class="p-4 text-center text-granite-400">—</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Sim</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Sim (Grande Porte)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-granite-800">Varanda Panorâmica</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Varanda com vista</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Varanda privada</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Varanda corrida ampla</td>
+            </tr>
+            <tr class="bg-cobalt-50/30">
+              <td class="p-4 font-semibold text-granite-800">Cozinha e Equipamentos</td>
+              <td class="p-4 text-center text-granite-600">Placa, micro-ondas, frigorífico</td>
+              <td class="p-4 text-center text-granite-600">Integral com forno e fogão</td>
+              <td class="p-4 text-center font-semibold text-cobalt-950">Cozinha de grande porte</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-granite-800">Aquecimento Central & Água Quente</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Incluído</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Incluído</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Incluído</td>
+            </tr>
+            <tr class="bg-cobalt-50/30">
+              <td class="p-4 font-semibold text-granite-800">Wi-Fi & TV Satélite de Ecrã Plano</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Grátis</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Grátis</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Grátis</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-granite-800">Churrasqueira Exterior</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Acesso livre</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Acesso livre</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Acesso livre</td>
+            </tr>
+            <tr class="bg-cobalt-50/30">
+              <td class="p-4 font-semibold text-granite-800">Estacionamento Privado</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Gratuito no local</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Gratuito no local</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">✓ Gratuito no local</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- POLICIES & RESERVATION TERMS -->
+    <section class="bg-[#FAFBFD] rounded-3xl border border-cobalt-100 p-8 sm:p-10 shadow-tile space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#0B357B] font-bold">Informações Úteis</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-black text-cobalt-950 mt-1">
+          Condições de Reserva & Políticas da Propriedade
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs text-granite-700">
+        <div class="p-5 rounded-2xl bg-white border border-cobalt-100 space-y-2">
+          <div class="font-bold text-[#0B357B] flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/>
+            </svg>
+            <span>Horários de Estadia</span>
+          </div>
+          <p>• <strong>Check-in:</strong> 16:00 – 20:00 h</p>
+          <p>• <strong>Check-out:</strong> 08:00 – 11:00 h</p>
+          <p class="text-[11px] text-granite-500">Por favor, informe a propriedade com antecedência da sua hora prevista de chegada.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white border border-cobalt-100 space-y-2">
+          <div class="font-bold text-[#0B357B] flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM168,108a12,12,0,1,1-12-12A12,12,0,0,1,168,108Zm-68,0a12,12,0,1,1-12-12A12,12,0,0,1,100,108Zm60,44a40,40,0,0,1-64,0,8,8,0,0,1,12.8-9.6,24,24,0,0,0,38.4,0,8,8,0,0,1,12.8,9.6Z"/>
+            </svg>
+            <span>Crianças & Camas Extra</span>
+          </div>
+          <p>• <strong>Até 2 anos:</strong> Grátis em berço (mediante pedido)</p>
+          <p>• <strong>3 aos 12 anos:</strong> 10€/noite por cama extra</p>
+          <p>• <strong>13+ anos / Adultos:</strong> 15€/noite por cama extra</p>
+          <p class="text-[11px] text-granite-500">Máximo de 2 camas extra/berços por apartamento, sujeitos a confirmação.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white border border-cobalt-100 space-y-2">
+          <div class="font-bold text-[#0B357B] flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,16V88H32V64Zm0,128H32V128H224v64Zm-16-24a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h32A8,8,0,0,1,208,168Zm-64,0a8,8,0,0,1-8,8H120a8,8,0,0,1,0-16h16A8,8,0,0,1,144,168Z"/>
+            </svg>
+            <span>Pagamento & Cancelamento</span>
+          </div>
+          <p>• <strong>Pagamento no local:</strong> Apenas numerário</p>
+          <p>• <strong>Cancelamento:</strong> As condições variam consoante o período e a tipologia selecionada</p>
+          <p class="text-[11px] text-granite-500">Sem taxas de intermediação em reservas diretas.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white border border-cobalt-100 space-y-2">
+          <div class="font-bold text-[#0B357B] flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M84,108a20,20,0,1,1,20-20A20,20,0,0,1,84,108Zm44-12a20,20,0,1,0-20-20A20,20,0,0,0,128,96Zm44,12a20,20,0,1,0-20-20A20,20,0,0,0,172,108ZM36,132a20,20,0,1,0,20-20A20,20,0,0,0,36,132Zm184,0a20,20,0,1,0-20-20A20,20,0,0,0,220,132Zm-46.7,29.17a52.1,52.1,0,0,0-90.6,0A32,32,0,0,0,64,192a32,32,0,0,0,51.87,24.9,76.54,76.54,0,0,1,24.26,0A32,32,0,0,0,192,192,32,32,0,0,0,173.3,161.17Z"/>
+            </svg>
+            <span>Regras da Casa</span>
+          </div>
+          <p>• <strong>Animais:</strong> Não são admitidos animais de estimação</p>
+          <p>• <strong>Fumadores:</strong> Quartos 100% não fumadores</p>
+          <p>• <strong>Roupa de Cama & Toalhas:</strong> Fornecidas gratuitamente</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECT INQUIRY CTA -->
+    <section class="rounded-3xl bg-[#0B357B] text-white p-8 sm:p-12 text-center relative overflow-hidden shadow-tile">
+      <div class="max-w-2xl mx-auto space-y-4">
+        <h3 class="text-2xl sm:text-3xl font-serif font-black">
+          Pronto para Reservar a Sua Estadia no Gerês?
+        </h3>
+        <p class="text-xs sm:text-sm text-cobalt-100 leading-relaxed font-sans">
+          Contacte-nos diretamente para obter o melhor preço garantido, sem comissões de plataformas, e tire todas as dúvidas com os proprietários.
+        </p>
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="https://wa.me/351933176678?text=Ol%C3%A1%20Casa%20Feij%C3%A3o!%20Gostaria%20de%20consultar%20disponibilidade%20para%20as%20acomoda%C3%A7%C3%B5es."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 group"
+          >
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8.01 12.27C8.14 12.44 9.76 14.94 12.24 16C12.83 16.27 13.28 16.42 13.64 16.53C14.25 16.73 14.8 16.7 15.24 16.63C15.73 16.56 16.74 16.02 16.95 15.43C17.16 14.84 17.16 14.34 17.1 14.23C17.04 14.12 16.88 14.06 16.64 13.94C16.4 13.82 15.21 13.23 14.99 13.15C14.77 13.07 14.61 13.03 14.45 13.27C14.29 13.51 13.82 14.06 13.68 14.23C13.54 14.39 13.4 14.41 13.16 14.29C12.92 14.17 12.15 13.92 11.24 13.11C10.53 12.48 10.05 11.7 9.91 11.46C9.77 11.22 9.9 11.09 10.02 10.97C10.13 10.86 10.27 10.68 10.39 10.54C10.5 10.4 10.55 10.3 10.63 10.14C10.71 9.97 10.67 9.83 10.61 9.71C10.55 9.59 10.08 8.42 9.88 7.95C9.69 7.49 9.49 7.55 9.34 7.54C9.2 7.54 9.04 7.33 8.53 7.33Z"/>
+            </svg>
+            <span>Reservar por WhatsApp (+351 933 176 678)</span>
+          </a>
+          <a
+            href="/contactos#reserva"
+            class="inline-flex items-center gap-1.5 px-6 py-3 rounded-full bg-white text-[#0B357B] hover:bg-cobalt-50 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+          >
+            <span>Formulário de Contacto</span>
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 256 256">
+              <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

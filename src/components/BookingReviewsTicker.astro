@@ -1,0 +1,198 @@
+---
+// src/components/BookingReviewsTicker.astro
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+const isPt = lang === 'pt';
+
+const reviewsPt = [
+  {
+    name: 'Suziegomes',
+    country: 'Portugal',
+    rating: 10,
+    text: 'Dona muito simpática, localização excelente, pertinho do centro e do rio. T0 acolhedor, com tudo o que é necessário. Voltaremos numa próxima oportunidade.',
+    date: 'Estadia em família',
+  },
+  {
+    name: 'Ievgeniia',
+    country: 'Portugal',
+    rating: 10,
+    text: 'O atendimento personalizado, a localização espetacular, os quartos com boas áreas. O sítio ideal para passar férias com as crianças, descansar e desfrutar da natureza. A Casa Feijão é para voltar!',
+    date: 'Estadia em família',
+  },
+  {
+    name: 'Dmartinho',
+    country: 'Portugal',
+    rating: 9.5,
+    text: 'Excelente atendimento e o estúdio oferecia todas as condições para passar uma estadia com conforto e sossego. Mesmo no Inverno o aquecimento era ótimo e a casa estava sempre quente.',
+    date: 'Estadia a dois',
+  },
+  {
+    name: 'Eduardo',
+    country: 'Brasil',
+    rating: 9.0,
+    text: 'Apartamento amplo, muitos utensílios domésticos disponíveis e silêncio absoluto para descanso no Gerês.',
+    date: 'Férias de descanso',
+  },
+  {
+    name: 'Cláudia',
+    country: 'Portugal',
+    rating: 10,
+    text: 'A simpatia da anfitriã, a limpeza impecável e a proximidade aos principais trilhos e cascatas do Gerês. Experiência fantástica!',
+    date: 'Escapadinha no Gerês',
+  },
+  {
+    name: 'Marc',
+    country: 'França',
+    rating: 9.5,
+    text: 'Vue magnifique sur la vallée et les montagnes. Logement très propre et bien équipé. Hôtesse particulièrement accueillante.',
+    date: 'Séjour en couple',
+  },
+];
+
+const reviewsEn = [
+  {
+    name: 'Suziegomes',
+    country: 'Portugal',
+    rating: 10,
+    text: 'Very friendly host, excellent location close to the center and river beach. Cozy studio with everything needed. We will definitely return.',
+    date: 'Family stay',
+  },
+  {
+    name: 'Ievgeniia',
+    country: 'Portugal',
+    rating: 10,
+    text: 'Personalized hospitality, spectacular location, spacious rooms. The ideal place for a family holiday to relax and enjoy nature. Casa Feijão is to return to!',
+    date: 'Family stay',
+  },
+  {
+    name: 'Dmartinho',
+    country: 'Portugal',
+    rating: 9.5,
+    text: 'Outstanding service and the studio offered every comfort for a peaceful stay. Even in winter, central heating was superb and the home was warm.',
+    date: 'Couples retreat',
+  },
+  {
+    name: 'Eduardo',
+    country: 'Brazil',
+    rating: 9.0,
+    text: 'Spacious apartment, well equipped with domestic kitchenware and peaceful silence for deep rest.',
+    date: 'Leisure stay',
+  },
+  {
+    name: 'Cláudia',
+    country: 'Portugal',
+    rating: 10,
+    text: 'Warmth of the hostess, spotless cleanliness, and walking proximity to the best trails and secret lagoons. Wonderful experience!',
+    date: 'Nature getaway',
+  },
+  {
+    name: 'Marc',
+    country: 'France',
+    rating: 9.5,
+    text: 'Magnificent views over the valley and mountains. Spotlessly clean and well-equipped. Warm and attentive host.',
+    date: 'Couples retreat',
+  },
+];
+
+const baseReviews = isPt ? reviewsPt : reviewsEn;
+// Quadruple array for seamless infinite marquee ticker on 3440px Ultrawide & 4K displays
+const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseReviews];
+---
+
+<section class="py-10 bg-white border-t border-cobalt-100/90 relative overflow-hidden">
+  <div class="w-full px-4 sm:px-8 lg:px-12">
+    <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+      
+      <!-- Left: Official Booking.com Badge (Static anchor) -->
+      <div class="shrink-0 w-full lg:w-auto flex items-center justify-between lg:justify-start gap-4 p-4 sm:px-5 sm:py-3.5 rounded-2xl bg-[#003580] text-white shadow-md border border-[#00224f]">
+        <div class="flex items-center gap-3.5">
+          <!-- Official Booking Logo Monogram & Score: Horizontal & Centered -->
+          <div class="h-11 px-3.5 rounded-xl bg-white text-[#003580] flex items-center justify-center gap-1 font-mono font-black shadow-xs shrink-0">
+            <span class="text-base font-black leading-none">8.9</span>
+            <span class="text-xs font-bold opacity-75 leading-none">/ 10</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5 font-bold tracking-tight text-sm">
+              <span>Booking.com</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="text-xs text-blue-100 font-medium">
+              {isPt ? 'Excelente • 9.0 casais' : 'Superb • 9.0 couples'}
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden sm:block pl-3 border-l border-white/20 text-right text-[11px] text-blue-200">
+          <span class="block font-bold text-white">{isPt ? 'Verificado' : 'Verified'}</span>
+          <span>{isPt ? 'Hóspedes Reais' : 'Real Guests'}</span>
+        </div>
+      </div>
+
+      <!-- Right: Scrolling Reviews Strip (Shortened pills that smoothly expand inline on hover) -->
+      <div class="flex-1 w-full overflow-hidden py-3">
+        <div class="flex items-center gap-4 animate-ticker hover:[animation-play-state:paused] w-max">
+          {tickerReviews.map((rev) => (
+            <div
+              tabindex="0"
+              class="group/card shrink-0 cursor-pointer inline-flex flex-col justify-center px-4 py-2.5 rounded-2xl bg-[#FAFBFD] hover:bg-white border border-cobalt-200/90 hover:border-[#003580] shadow-2xs hover:shadow-xl transition-all duration-300 w-[240px] hover:w-[380px] focus:w-[380px]"
+            >
+              <!-- Compact Shortened Pill (Always visible) -->
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 overflow-hidden">
+                  <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold flex items-center justify-center shrink-0">
+                    {rev.rating}
+                  </span>
+                  <span class="font-bold text-xs text-cobalt-950 truncate">
+                    {rev.name}
+                  </span>
+                  <span class="text-xs text-granite-400 shrink-0">•</span>
+                  <span class="text-xs text-granite-600 truncate">
+                    {rev.country}
+                  </span>
+                </div>
+                <span class="text-[#0B357B] shrink-0 group-hover/card:rotate-180 transition-transform duration-300">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 256 256">
+                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/>
+                  </svg>
+                </span>
+              </div>
+
+              <!-- Inline Expanded Review Text (Zero popup clipping, silky smooth CSS grid transition) -->
+              <div class="grid grid-rows-[0fr] group-hover/card:grid-rows-[1fr] group-focus/card:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+                <div class="overflow-hidden">
+                  <p class="text-xs sm:text-[13px] text-slate-900 font-medium font-sans pt-2.5 border-t border-cobalt-200 mt-2.5 leading-relaxed">
+                    "{rev.text}"
+                  </p>
+                  <div class="flex items-center justify-between pt-2 text-[10px] text-granite-400 font-mono">
+                    <span>{rev.date}</span>
+                    <span class="text-[#003580] font-bold">Booking.com ✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes ticker-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-ticker {
+    display: flex;
+    animation: ticker-scroll 60s linear infinite;
+  }
+</style>

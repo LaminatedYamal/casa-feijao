@@ -1,0 +1,125 @@
+---
+import { CasaFeijaoLogoLockup } from './CasaFeijaoLogoLockup';
+
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+const isPt = lang === 'pt';
+---
+
+<footer class="bg-[#FAFBFD] text-cobalt-950 border-t-2 border-cobalt-100 pt-16 pb-12 mt-24 relative overflow-hidden">
+  <!-- Subtle decorative top azulejo band -->
+  <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0B357B] via-[#1A54A6] to-[#0B357B] opacity-80"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Centered Brand Medallion (Mimics Header) -->
+    <div class="flex flex-col items-center justify-center pb-12 border-b border-cobalt-100/80">
+      <a
+        href={isPt ? '/' : '/en'}
+        class="group flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95 duration-200"
+        title={isPt ? 'Casa Feijão • Início' : 'Casa Feijão • Home'}
+      >
+        <CasaFeijaoLogoLockup client:load lang={lang} size="lg" />
+      </a>
+      <p class="mt-4 text-xs sm:text-sm text-granite-600 max-w-xl text-center font-serif italic">
+        {isPt
+          ? '“Refúgio acolhedor situado em Vilar da Veiga, em pleno coração do Parque Nacional da Peneda-Gerês. A 6 minutos a pé da praia fluvial da Caniçada.”'
+          : '“A peaceful sanctuary in Vilar da Veiga, in the heart of Peneda-Gerês National Park. Just a 6-minute walk to Caniçada river beach.”'}
+      </p>
+    </div>
+
+    <!-- 3-Column Consolidated Footer Links -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 py-12 border-b border-cobalt-100/80">
+      <!-- Col 1: Alojamento Local & Identidade -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#0B357B] font-sans">
+          {isPt ? 'Alojamento Local' : 'Guest Sanctuary'}
+        </h4>
+        <p class="text-xs text-granite-600 leading-relaxed">
+          {isPt
+            ? 'Registo Oficial RNAL: Alojamento Local verificado em Vilar da Veiga, Terras de Bouro. Três tipologias independentes com cozinha privativa, aquecimento e vista desafogada para as montanhas e lago da Caniçada.'
+            : 'Official RNAL Registry: Verified local accommodation in Vilar da Veiga, Terras de Bouro. Three self-catering units with mountain and Caniçada lake vistas.'}
+        </p>
+        <p class="text-[11px] text-granite-400 font-mono">
+          RNAL N.º 555/AL • 556/AL • 557/AL
+        </p>
+      </div>
+
+      <!-- Col 2: Guia do Gerês (Single Clean Link) -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#0B357B] font-sans">
+          {isPt ? 'Guia do Gerês' : 'Gerês Guide'}
+        </h4>
+        <p class="text-xs text-granite-600 leading-relaxed">
+          {isPt
+            ? 'Cascatas secretas, praias fluviais, termas e miradouros do Parque Nacional da Peneda-Gerês.'
+            : 'Secret waterfalls, river beaches, thermal springs, and scenic viewpoints across Peneda-Gerês.'}
+        </p>
+        <div class="pt-1">
+          <a
+            href={isPt ? '/geres' : '/en/geres'}
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cobalt-50 hover:bg-[#0B357B] text-[#0B357B] hover:text-white font-bold text-xs transition-colors duration-200 border border-cobalt-200 group"
+          >
+            <span>{isPt ? 'Explorar Guia do Gerês' : 'Explore Gerês Guide'}</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 3: Contactos & Localização + Official WhatsApp Logo -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#0B357B] mb-3 font-sans">
+          {isPt ? 'Contactos & Localização' : 'Contact & Location'}
+        </h4>
+        <div class="space-y-3 text-xs text-granite-700">
+          <p class="leading-relaxed">
+            <span class="block text-cobalt-950 font-bold">{isPt ? 'Residência Casa Feijão' : 'Casa Feijão Guesthouse'}</span>
+            Rua Corga de Loureiro, 30<br />
+            4845-076 Vilar da Veiga • Gerês
+          </p>
+          <div class="space-y-1.5 font-sans text-xs">
+            <a href="tel:+351253391971" class="flex items-center gap-2 text-[#0B357B] hover:text-cobalt-900 font-semibold transition-colors">
+              <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11a16,16,0,0,0-15.17,1.4L136.4,154.2a119.78,119.78,0,0,1-34.6-34.6l15.45-23.69a16,16,0,0,0,1.4-15.17L97.54,33.63A16,16,0,0,0,83.07,24H48A24,24,0,0,0,24,48,184,184,0,0,0,208,232a24,24,0,0,0,24-24V172.93A16,16,0,0,0,222.37,158.46ZM216,208a8,8,0,0,1-8,8A168.19,168.19,0,0,1,40,48a8,8,0,0,1,8-8H83.07l21.11,47.11L86.66,114.73a8,8,0,0,0-.56,7.74,135.61,135.61,0,0,0,47.43,47.43,8,8,0,0,0,7.74-.56l27.62-17.52L216,172.93Z"/></svg>
+              <span>(+351) 253 391 971</span>
+            </a>
+            <a href="tel:+351933176678" class="flex items-center gap-2 text-[#0B357B] hover:text-cobalt-900 font-semibold transition-colors">
+              <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,40a8,8,0,0,1,8-8h96a8,8,0,0,1,8,8v128H72ZM184,216a8,8,0,0,1-8,8H80a8,8,0,0,1-8-8V184H184Zm-44-16a12,12,0,1,1-12-12A12,12,0,0,1,140,200Z"/></svg>
+              <span>(+351) 933 176 678</span>
+            </a>
+            <a href="mailto:info@casafeijao.com" class="flex items-center gap-2 text-granite-600 hover:text-[#0B357B] transition-colors font-sans">
+              <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM208,64,128,124,48,64ZM216,192H40V74.19l83.13,62.35a8,8,0,0,0,9.74,0L216,74.19V192Z"/></svg>
+              <span>info@casafeijao.com</span>
+            </a>
+          </div>
+          <div class="pt-2">
+            <a
+              href="https://wa.me/351933176678"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={isPt ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
+              class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white font-semibold text-xs shadow-sm transition-all duration-200"
+            >
+              <!-- Official WhatsApp Vector Logo -->
+              <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8.01 12.27C8.14 12.44 9.76 14.94 12.24 16C12.83 16.27 13.28 16.42 13.64 16.53C14.25 16.73 14.8 16.7 15.24 16.63C15.73 16.56 16.74 16.02 16.95 15.43C17.16 14.84 17.16 14.34 17.1 14.23C17.04 14.12 16.88 14.06 16.64 13.94C16.4 13.82 15.21 13.23 14.99 13.15C14.77 13.07 14.61 13.03 14.45 13.27C14.29 13.51 13.82 14.06 13.68 14.23C13.54 14.39 13.4 14.41 13.16 14.29C12.92 14.17 12.15 13.92 11.24 13.11C10.53 12.48 10.05 11.7 9.91 11.46C9.77 11.22 9.9 11.09 10.02 10.97C10.13 10.86 10.27 10.68 10.39 10.54C10.5 10.4 10.55 10.3 10.63 10.14C10.71 9.97 10.67 9.83 10.61 9.71C10.55 9.59 10.08 8.42 9.88 7.95C9.69 7.49 9.49 7.55 9.34 7.54C9.2 7.54 9.04 7.33 8.53 7.33Z"/>
+              </svg>
+              <span>{isPt ? 'WhatsApp Direto' : 'Direct WhatsApp'}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright & Sanctuary Tagline -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-granite-500 gap-4">
+      <p>© {new Date().getFullYear()} Casa Feijão • Alojamento Local. {isPt ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
+      <p class="text-center sm:text-right font-serif italic text-[#0B357B] font-semibold">
+        {isPt
+          ? 'No coração do Parque Nacional da Peneda-Gerês • Vilar da Veiga'
+          : 'In the heart of Peneda-Gerês National Park • Vilar da Veiga'}
+      </p>
+    </div>
+  </div>
+</footer>

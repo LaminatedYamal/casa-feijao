@@ -1,0 +1,36 @@
+---
+// src/components/HomePanoramicHero.astro
+import { BookingBar } from './BookingBar';
+
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+---
+
+<section class="relative w-full bg-[#FAFBFD] border-b border-cobalt-100 overflow-hidden">
+  <!-- 4K Panoramic Image of Caniçada Lake & Gerês Mountains -->
+  <div class="relative w-full h-[50vh] sm:h-[62vh] lg:h-[72vh] overflow-hidden bg-slate-900">
+    <picture>
+      <source srcset="/images/_vilardaveiga_geres_casa_feijao.webp" type="image/webp" />
+      <img
+        src="/images/_vilardaveiga_geres_casa_feijao.jpg"
+        alt="Panorâmica da Albufeira da Caniçada e Serra do Gerês - Vilar da Veiga"
+        class="w-full h-full object-cover object-center transform scale-100 transition-transform duration-1000 ease-out"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        width="1474"
+        height="500"
+      />
+    </picture>
+    <!-- Subtle bottom gradient vignette to smoothly anchor the booking bar -->
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#FAFBFD] via-[#FAFBFD]/40 to-transparent pointer-events-none" />
+  </div>
+
+  <!-- Flush Docked Booking Bar -->
+  <div class="relative -mt-8 sm:-mt-14 z-20 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 pb-10 sm:pb-16">
+    <BookingBar client:load lang={lang} isDocked={false} />
+  </div>
+</section>

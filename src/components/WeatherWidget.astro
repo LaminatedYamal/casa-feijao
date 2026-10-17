@@ -1,0 +1,261 @@
+---
+// src/components/WeatherWidget.astro
+interface Props {
+  lang?: 'pt' | 'en';
+  title?: string;
+  subtitle?: string;
+}
+
+const { lang = 'pt', title, subtitle } = Astro.props;
+const isPt = lang === 'pt';
+
+const defaultTitle = isPt ? 'Meteorologia no Gerês (Vilar da Veiga)' : 'Gerês Mountain Weather (Vilar da Veiga)';
+const defaultSubtitle = isPt
+  ? 'Dados em tempo real das coordenadas de Casa Feijão para planear cascatas, lagoas e trilhos'
+  : 'Real-time weather data for Casa Feijão coordinates to plan waterfall visits and hiking trails';
+---
+
+<div class="rounded-3xl bg-[#FAFBFD] border border-cobalt-200/80 p-6 sm:p-8 shadow-sm">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-cobalt-100">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-[#0B357B] text-white flex items-center justify-center shadow-xs shrink-0">
+        <!-- Phosphor SunHorizon Icon -->
+        <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 256 256">
+          <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,0,0-128,0,8,8,0,0,0,16,0,48,48,0,0,1,96,0,8,8,0,0,0,16,0ZM59,70.34a8,8,0,0,0-11.31-11.31L30.34,76.34A8,8,0,0,0,41.66,87.66ZM225.66,76.34l-17.32-17.31A8,8,0,0,0,197,70.34l17.31,17.32a8,8,0,0,0,11.32-11.32ZM248,152H232a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM24,152H8a8,8,0,0,0,0,16H24a8,8,0,0,0,0-16Zm216,40H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16Z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-lg sm:text-xl font-serif font-bold text-cobalt-950">
+          {title || defaultTitle}
+        </h3>
+        <p class="text-xs text-granite-600 font-sans">
+          {subtitle || defaultSubtitle}
+        </p>
+      </div>
+    </div>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200/60 self-start sm:self-auto font-sans">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span>{isPt ? '41.7086° N, 8.1786° W • Serra do Gerês' : '41.7086° N, 8.1786° W • Gerês Range'}</span>
+    </div>
+  </div>
+
+  <!-- Live Weather Display Card -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="geres-weather-card">
+    
+    <!-- Main Card with Guaranteed High-Contrast Cobalt Gradient -->
+    <div
+      class="md:col-span-2 rounded-2xl bg-gradient-to-br from-[#0B357B] via-[#1A54A6] to-[#003366] p-6 text-white shadow-md flex flex-col justify-between relative overflow-hidden"
+      style="background: linear-gradient(135deg, #0B357B 0%, #1A54A6 50%, #003366 100%);"
+    >
+      <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+      
+      <div class="flex items-center justify-between mb-4 relative z-10">
+        <div>
+          <span class="text-xs uppercase font-sans font-semibold tracking-wider text-sky-200">{isPt ? 'Condição Atual' : 'Current Condition'}</span>
+          <h4 class="text-2xl font-bold font-serif text-white mt-0.5" id="gw-condition-label">{isPt ? 'Céu Limpo' : 'Clear Sky'}</h4>
+        </div>
+        <div id="gw-condition-icon" class="text-white">
+          <svg class="w-10 h-10 fill-current text-amber-300" viewBox="0 0 256 256">
+            <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm88,80a8,8,0,0,0-16,0v24a8,8,0,0,0,16,0Zm96-88H208a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="flex items-baseline gap-3 mt-4 relative z-10">
+        <span class="text-5xl sm:text-6xl font-bold font-sans tracking-tight text-white" id="gw-temp">20°C</span>
+        <span class="text-sm text-sky-100 font-sans font-medium" id="gw-apparent">{isPt ? 'Sensação: 20°C' : 'Feels like: 20°C'}</span>
+      </div>
+
+      <div class="mt-5 pt-3.5 border-t border-white/20 text-xs text-sky-100 flex items-center justify-between relative z-10 font-sans">
+        <span class="font-medium inline-flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current text-sky-200 shrink-0" viewBox="0 0 256 256">
+            <path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,120a32,32,0,1,1,32-32A32,32,0,0,1,128,136Z"/>
+          </svg>
+          Vilar da Veiga • Caniçada
+        </span>
+        <span class="text-[11px] text-sky-200" id="gw-update-time">{isPt ? 'Atualizado agora' : 'Updated now'}</span>
+      </div>
+    </div>
+
+    <!-- Stat 1: Wind & Lagoon Condition -->
+    <div class="rounded-2xl bg-white border border-cobalt-100 p-5 shadow-2xs flex flex-col justify-between">
+      <div>
+        <div class="w-9 h-9 rounded-xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center mb-3">
+          <!-- Phosphor Wind Icon -->
+          <svg class="w-5 h-5 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+            <path d="M184,184a32,32,0,0,1-32,32H40a8,8,0,0,1,0-16h112a16,16,0,0,0,0-32H24a8,8,0,0,1,0-16H152A32,32,0,0,1,184,184Zm32-80H40a8,8,0,0,0,0,16H216a16,16,0,0,1,0,32H184a8,8,0,0,0,0,16h32a32,32,0,0,0,0-64Zm-64-16a32,32,0,0,0,32-32c0-17.65-14.33-32-32-32H40a8,8,0,0,0,0,16h112a16,16,0,0,1,0,32H120a8,8,0,0,0,0,16Z"/>
+          </svg>
+        </div>
+        <div class="text-xs text-granite-500 font-semibold uppercase tracking-wider font-sans">{isPt ? 'Vento na Albufeira' : 'Lake Wind Speed'}</div>
+        <div class="text-2xl font-bold font-sans text-cobalt-950 mt-1" id="gw-wind">6 km/h</div>
+      </div>
+      <p class="text-[11px] text-emerald-800 font-medium mt-3 bg-emerald-50/90 border border-emerald-200/60 px-2.5 py-1.5 rounded-lg font-sans">
+        {isPt ? '✓ Águas calmas para paddle e kayak' : '✓ Calm waters for paddle & kayaking'}
+      </p>
+    </div>
+
+    <!-- Stat 2: Humidity & Trail Comfort -->
+    <div class="rounded-2xl bg-white border border-cobalt-100 p-5 shadow-2xs flex flex-col justify-between">
+      <div>
+        <div class="w-9 h-9 rounded-xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center mb-3">
+          <!-- Phosphor Drop Icon -->
+          <svg class="w-5 h-5 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+            <path d="M174,47.75a3.91,3.91,0,0,0-5.28,1L128,101.71,87.24,48.74a3.9,3.9,0,0,0-5.28-1C55.48,69.5,40,105.74,40,144a88,88,0,0,0,176,0C216,105.74,200.52,69.5,174,47.75ZM128,216a72.08,72.08,0,0,1-72-72c0-32.22,12.89-63.15,35.43-83L128,108.93l36.57-47.93C187.11,80.85,200,111.78,200,144A72.08,72.08,0,0,1,128,216Z"/>
+          </svg>
+        </div>
+        <div class="text-xs text-granite-500 font-semibold uppercase tracking-wider font-sans">{isPt ? 'Humidade Relativa' : 'Relative Humidity'}</div>
+        <div class="text-2xl font-bold font-sans text-cobalt-950 mt-1" id="gw-humidity">54%</div>
+      </div>
+      <p class="text-[11px] text-[#0B357B] font-medium mt-3 bg-cobalt-50/90 border border-cobalt-200/60 px-2.5 py-1.5 rounded-lg font-sans">
+        {isPt ? '✓ Excelente visibilidade nos miradouros' : '✓ Superb viewpoint visibility'}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- 5-Day Extended Mountain Forecast -->
+  <div class="mt-6 pt-6 border-t border-cobalt-100">
+    <div class="flex items-center justify-between mb-3.5">
+      <h4 class="text-xs font-bold uppercase tracking-wider text-cobalt-950 font-sans flex items-center gap-1.5">
+        <!-- Phosphor CalendarBlank Icon -->
+        <svg class="w-4 h-4 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+          <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/>
+        </svg>
+        <span>{isPt ? 'Previsão a 5 Dias na Serra' : '5-Day Gerês Mountain Forecast'}</span>
+      </h4>
+      <span class="text-[11px] text-granite-500 font-sans">{isPt ? 'Vilar da Veiga • Caniçada' : 'Vilar da Veiga • Caniçada'}</span>
+    </div>
+
+    <!-- 5 Daily Forecast Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3" id="gw-forecast-grid">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <div class="p-3 sm:p-3.5 rounded-2xl bg-white border border-cobalt-100/90 shadow-2xs flex flex-col items-center text-center justify-between hover:border-cobalt-300 transition-colors" id={`gw-day-${i}`}>
+          <span class="text-xs font-bold text-cobalt-950 font-sans" id={`gw-day-name-${i}`}>
+            {i === 0 ? (isPt ? 'Hoje' : 'Today') : (isPt ? `Dia +${i}` : `Day +${i}`)}
+          </span>
+          <div class="my-2 text-[#0B357B]" id={`gw-day-icon-${i}`}>
+            <svg class="w-6 h-6 fill-current text-amber-500" viewBox="0 0 256 256">
+              <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm88,80a8,8,0,0,0-16,0v24a8,8,0,0,0,16,0Zm96-88H208a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/>
+            </svg>
+          </div>
+          <span class="text-[11px] text-granite-500 truncate max-w-full font-sans" id={`gw-day-cond-${i}`}>
+            {isPt ? 'Limpo' : 'Clear'}
+          </span>
+          <div class="mt-1 flex items-center gap-1.5 text-xs font-mono font-bold">
+            <span class="text-cobalt-950" id={`gw-day-max-${i}`}>22°</span>
+            <span class="text-granite-400 font-normal">/</span>
+            <span class="text-granite-500 font-medium" id={`gw-day-min-${i}`}>13°</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ isPt }}>
+  (async function initGeresWeather() {
+    try {
+      const res = await fetch(
+        'https://api.open-meteo.com/v1/forecast?latitude=41.7086&longitude=-8.1786&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=5&timezone=auto'
+      );
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.current) return;
+
+      const c = data.current;
+      const code = c.weather_code;
+      const isDay = c.is_day === 1;
+
+      const sunSvg = '<svg class="w-10 h-10 fill-current text-amber-300" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm88,80a8,8,0,0,0-16,0v24a8,8,0,0,0,16,0Zm96-88H208a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>';
+      const moonSvg = '<svg class="w-10 h-10 fill-current text-sky-200" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z"/></svg>';
+      const cloudSunSvg = '<svg class="w-10 h-10 fill-current text-amber-200" viewBox="0 0 256 256"><path d="M128,40a8,8,0,0,1,8-8V16a8,8,0,0,0-16,0V32A8,8,0,0,1,128,40ZM65.8,77.11a8,8,0,0,0,11.31-11.31l-16-16A8,8,0,0,0,49.8,61.11Zm135.71,0,16-16a8,8,0,1,0-11.31-11.31l-16,16a8,8,0,1,0,11.31,11.31ZM40,128a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H32A8,8,0,0,1,40,128Zm120,40a40,40,0,0,0,40-40,39.63,39.63,0,0,0-7.35-23A56,56,0,0,0,88,80a55.45,55.45,0,0,0-8.89.72A40,40,0,0,0,48,120a39.81,39.81,0,0,0,24,36.65V168A48.05,48.05,0,0,0,120,216h40a40,40,0,0,0,0-80Z"/></svg>';
+      const cloudSvg = '<svg class="w-10 h-10 fill-current text-sky-100" viewBox="0 0 256 256"><path d="M240,136a48.05,48.05,0,0,1-48,48H72A56,56,0,0,1,60.8,75.12,72,72,0,0,1,194.24,85.22,48.06,48.06,0,0,1,240,136Z"/></svg>';
+      const rainSvg = '<svg class="w-10 h-10 fill-current text-sky-200" viewBox="0 0 256 256"><path d="M240,128a48.05,48.05,0,0,1-48,48H168a8,8,0,0,1,0-16h24a32,32,0,0,0,0-64,31.42,31.42,0,0,0-13,2.81A8,8,0,0,1,168,96a56,56,0,0,0-108.48,14.61,8,8,0,0,1-6.72,7.79A40,40,0,0,0,64,160H88a8,8,0,0,1,0,16H64A56,56,0,0,1,52.8,67.12,72,72,0,0,1,186.24,77.22,48.06,48.06,0,0,1,240,128Zm-120,72a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V208A8,8,0,0,0,120,200Zm40,0a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V208A8,8,0,0,0,160,200ZM80,200a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V208A8,8,0,0,0,80,200Z"/></svg>';
+
+      function getWeatherInfo(weatherCode, dayFlag) {
+        let label = isPt ? 'Céu Limpo' : 'Clear Sky';
+        let icon = dayFlag ? sunSvg : moonSvg;
+        if (weatherCode === 1 || weatherCode === 2) {
+          label = isPt ? 'Pouco Nublado' : 'Partly Cloudy';
+          icon = dayFlag ? cloudSunSvg : cloudSvg;
+        } else if (weatherCode === 3) {
+          label = isPt ? 'Nublado' : 'Overcast';
+          icon = cloudSvg;
+        } else if (weatherCode >= 45 && weatherCode <= 48) {
+          label = isPt ? 'Nevoeiro' : 'Fog';
+          icon = cloudSvg;
+        } else if (weatherCode >= 51 && weatherCode <= 67) {
+          label = isPt ? 'Chuva' : 'Rain';
+          icon = rainSvg;
+        } else if (weatherCode >= 71 && weatherCode <= 77) {
+          label = isPt ? 'Neve' : 'Snow';
+          icon = rainSvg;
+        } else if (weatherCode >= 80 && weatherCode <= 82) {
+          label = isPt ? 'Aguaceiros' : 'Showers';
+          icon = rainSvg;
+        } else if (weatherCode >= 95) {
+          label = isPt ? 'Trovoada' : 'Thunderstorm';
+          icon = rainSvg;
+        }
+        return { label, icon };
+      }
+
+      const currentInfo = getWeatherInfo(code, isDay);
+
+      const tempEl = document.getElementById('gw-temp');
+      const apparentEl = document.getElementById('gw-apparent');
+      const conditionEl = document.getElementById('gw-condition-label');
+      const iconEl = document.getElementById('gw-condition-icon');
+      const windEl = document.getElementById('gw-wind');
+      const humidityEl = document.getElementById('gw-humidity');
+      const updateEl = document.getElementById('gw-update-time');
+
+      if (tempEl) tempEl.textContent = Math.round(c.temperature_2m) + '°C';
+      if (apparentEl) apparentEl.textContent = (isPt ? 'Sensação: ' : 'Feels like: ') + Math.round(c.apparent_temperature) + '°C';
+      if (conditionEl) conditionEl.textContent = currentInfo.label;
+      if (iconEl) iconEl.innerHTML = currentInfo.icon;
+      if (windEl) windEl.textContent = Math.round(c.wind_speed_10m) + ' km/h';
+      if (humidityEl) humidityEl.textContent = Math.round(c.relative_humidity_2m) + '%';
+      if (updateEl) {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        updateEl.textContent = (isPt ? 'Hoje às ' : 'Today at ') + timeStr;
+      }
+
+      // Update 5-Day Forecast
+      if (data.daily && data.daily.time && data.daily.time.length >= 5) {
+        const ptDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        const enDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        for (let i = 0; i < 5; i++) {
+          const dateStr = data.daily.time[i];
+          const date = new Date(dateStr + 'T12:00:00');
+          const dayIndex = date.getDay();
+          const dayName = i === 0 ? (isPt ? 'Hoje' : 'Today') : (isPt ? ptDays[dayIndex] : enDays[dayIndex]);
+
+          const dCode = data.daily.weather_code[i];
+          const dMax = Math.round(data.daily.temperature_2m_max[i]);
+          const dMin = Math.round(data.daily.temperature_2m_min[i]);
+          const dInfo = getWeatherInfo(dCode, true);
+
+          const nameEl = document.getElementById(`gw-day-name-${i}`);
+          const iconContainerEl = document.getElementById(`gw-day-icon-${i}`);
+          const condEl = document.getElementById(`gw-day-cond-${i}`);
+          const maxEl = document.getElementById(`gw-day-max-${i}`);
+          const minEl = document.getElementById(`gw-day-min-${i}`);
+
+          if (nameEl) nameEl.textContent = dayName;
+          if (iconContainerEl) {
+            // Scale icon down to 24px
+            iconContainerEl.innerHTML = dInfo.icon.replace('w-10 h-10', 'w-6 h-6');
+          }
+          if (condEl) condEl.textContent = dInfo.label;
+          if (maxEl) maxEl.textContent = dMax + '°';
+          if (minEl) minEl.textContent = dMin + '°';
+        }
+      }
+    } catch (e) {
+      // Keep static graceful values
+    }
+  })();
+</script>

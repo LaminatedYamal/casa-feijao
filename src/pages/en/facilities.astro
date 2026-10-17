@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Facilities & Amenities • Casa Feijão Gerês"
+  description="Discover Casa Feijão amenities: Free Wi-Fi, central heating, fully equipped kitchens, barbecue facilities, river beaches, and local distances."
+  lang="en"
+>
+  <!-- Hero Section -->
+  <section class="py-12 sm:py-16 bg-gradient-to-b from-[#FAFBFD] to-white border-b border-cobalt-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Facilities & Amenities' }]} lang="en" className="mb-6" />
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-block text-xs font-semibold uppercase tracking-widest text-[#0B357B] mb-3 font-sans">
+          Comfort & Autonomy • Vilar da Veiga
+        </span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-cobalt-950 tracking-tight">
+          Facilities & Amenities
+        </h1>
+        <p class="mt-4 text-sm sm:text-base text-granite-600 leading-relaxed font-sans">
+          Everything designed for a peaceful, autonomous stay in the mountains. Fully equipped private kitchens, central heating, outdoor barbecue, and private parking.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-8 rounded-3xl bg-white border border-cobalt-100 shadow-tile space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-cobalt-800 flex items-center justify-center font-bold text-xl">
+          <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+            <path d="M128,184a20,20,0,1,0,20,20A20,20,0,0,0,128,184Zm0,24a4,4,0,1,1,4-4A4,4,0,0,1,128,208ZM82.72,154.72a64,64,0,0,1,90.56,0,8,8,0,0,0,11.31-11.32,80,80,0,0,0-113.18,0,8,8,0,0,0,11.31,11.32Zm-34-33.94a112,112,0,0,1,158.56,0,8,8,0,1,0,11.31-11.32,128,128,0,0,0-181.18,0,8,8,0,0,0,11.31,11.32ZM14.75,75.75a160,160,0,0,1,226.5,0,8,8,0,1,0,11.31-11.32,176,176,0,0,0-249.12,0,8,8,0,0,0,11.31,11.32Z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-serif font-bold text-cobalt-950">Connectivity & Comfort</h2>
+        <ul class="space-y-2 text-xs text-granite-600">
+          <li>✓ Free high-speed Wi-Fi throughout the property</li>
+          <li>✓ Central heating in all bedrooms and living areas</li>
+          <li>✓ Traditional fireplace in Apartments T1 & T3</li>
+          <li>✓ Flat-screen satellite TV</li>
+          <li>✓ Non-smoking accommodations</li>
+        </ul>
+      </div>
+
+      <div class="p-8 rounded-3xl bg-white border border-cobalt-100 shadow-tile space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-cobalt-800 flex items-center justify-center font-bold text-xl">
+          <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+            <path d="M248,112H232V96a16,16,0,0,0-16-16H168a8,8,0,0,0,0,16h48v16H136V48a8,8,0,0,0-16,0v64H40V96H88a8,8,0,0,0,0-16H40A16,16,0,0,0,24,96v16H8a8,8,0,0,0,0,16H24v72a32,32,0,0,0,32,32H200a32,32,0,0,0,32-32V128h16a8,8,0,0,0,0-16Zm-32,88a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V128H216Z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-serif font-bold text-cobalt-950">Kitchen & Autonomy</h2>
+        <ul class="space-y-2 text-xs text-granite-600">
+          <li>✓ Fully equipped kitchen (stovetop, oven, microwave)</li>
+          <li>✓ Refrigerator, toaster, and coffee maker</li>
+          <li>✓ Complete cookware and dinnerware sets</li>
+          <li>✓ Outdoor barbecue terrace and open-air dining</li>
+          <li>✓ Fresh towels, toiletries, and bed linens provided</li>
+        </ul>
+      </div>
+
+      <div class="p-8 rounded-3xl bg-white border border-cobalt-100 shadow-tile space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-cobalt-800 flex items-center justify-center font-bold text-xl">
+          <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+            <path d="M240,112H229.2L201.42,49.5A16,16,0,0,0,186.8,40H69.2a16,16,0,0,0-14.62,9.5L26.8,112H16a8,8,0,0,0,0,16h8v80a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V192h96v16a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM69.2,56H186.8l24.89,56H44.31ZM64,192H40V128H64Zm152,0H192V128h24Zm-144-48a16,16,0,1,1,16,16A16,16,0,0,1,72,144Zm96,16a16,16,0,1,1,16-16A16,16,0,0,1,168,160Z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-serif font-bold text-cobalt-950">Parking & Surroundings</h2>
+        <ul class="space-y-2 text-xs text-granite-600">
+          <li>✓ Free private on-site parking</li>
+          <li>✓ 6-minute walk to Boco river beach</li>
+          <li>✓ Peaceful setting free from road noise</li>
+          <li>✓ Unobstructed views of mountains and lake</li>
+          <li>✓ Private entrance for every unit</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Distances List -->
+    <div class="p-8 sm:p-10 rounded-3xl bg-[#FAFBFD] border border-cobalt-100 shadow-tile space-y-8">
+      <div>
+        <span class="text-xs font-mono uppercase tracking-widest text-[#0B357B] font-bold">Strategic Location</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-black text-cobalt-950 mt-1">
+          Distances to Landmarks & Local Services
+        </h2>
+      </div>
+
+      <!-- Nature & Landmarks -->
+      <div>
+        <h3 class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#0B357B] mb-3 font-mono">
+          <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M208,128a55.93,55.93,0,0,0-17.76-40.75,72,72,0,0,0-124.48,0A56,56,0,0,0,48,184h72v48a8,8,0,0,0,16,0V184h72A56.06,56.06,0,0,0,208,128ZM128,32a56,56,0,0,1,49.88,30.67,8,8,0,0,0,8.74,4.11A40,40,0,0,1,208,128a40.07,40.07,0,0,1-30.86,39,8,8,0,0,0-6.14,6.72A8,8,0,0,0,172,168H84a8,8,0,0,0,1-1.28,8,8,0,0,0-6.14-6.72A40.07,40.07,0,0,1,48,128a40,40,0,0,1,21.38-35.22,8,8,0,0,0,8.74-4.11A56,56,0,0,1,128,32Z"/>
+          </svg>
+          <span>Nature & Heritage</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Boco River Beach</span>
+            <span class="font-bold text-[#0B357B] text-sm">6 min walk</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Gerês River</span>
+            <span class="font-bold text-[#0B357B] text-sm">0.5 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">National Park (Gates)</span>
+            <span class="font-bold text-[#0B357B] text-sm">1.7 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Gerês Thermal Spa</span>
+            <span class="font-bold text-[#0B357B] text-sm">2.5 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">São Bento Sanctuary</span>
+            <span class="font-bold text-[#0B357B] text-sm">3.6 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Arado Waterfall</span>
+            <span class="font-bold text-[#0B357B] text-sm">3.7 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Tahiti Waterfall</span>
+            <span class="font-bold text-[#0B357B] text-sm">4.8 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Pedra Bela Viewpoint</span>
+            <span class="font-bold text-[#0B357B] text-sm">6.0 km</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurants & Supermarkets -->
+      <div class="pt-4 border-t border-cobalt-100/70">
+        <h3 class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#0B357B] mb-3 font-mono">
+          <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M110.15,90.15l-40,40a8,8,0,0,1-11.31,0l-16-16a8,8,0,0,1,0-11.31l40-40a8,8,0,0,1,11.31,0l16,16A8,8,0,0,1,110.15,90.15ZM216,40a8,8,0,0,0-8,8v48.69L149.66,155A8,8,0,0,0,144,160.69V216a8,8,0,0,0,16,0V164l53.66-53.66A8,8,0,0,0,216,104.69V48A8,8,0,0,0,216,40ZM96,160.69V216a8,8,0,0,1-16,0V160.69a8,8,0,0,1,2.34-5.66L158.69,78.69l11.31,11.31L93.66,166.34A8,8,0,0,1,96,160.69Z"/>
+          </svg>
+          <span>Dining, Grocery & Travel Links</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Portela Grocery Market</span>
+            <span class="font-bold text-cobalt-950 text-sm">0.3 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Adega Ramalho Bistro</span>
+            <span class="font-bold text-cobalt-950 text-sm">0.5 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Amanhecer Market</span>
+            <span class="font-bold text-cobalt-950 text-sm">3.0 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Gerês Ice Cream & Bars</span>
+            <span class="font-bold text-cobalt-950 text-sm">3.0 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Vilarinho Reservoir</span>
+            <span class="font-bold text-cobalt-950 text-sm">7.3 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Pingo Doce / Lidl Supermarkets</span>
+            <span class="font-bold text-cobalt-950 text-sm">14 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Vigo Airport (VGO)</span>
+            <span class="font-bold text-cobalt-950 text-sm">70 km</span>
+          </div>
+          <div class="p-3.5 bg-white rounded-2xl border border-cobalt-100">
+            <span class="text-granite-500 block">Porto Airport (OPO)</span>
+            <span class="font-bold text-cobalt-950 text-sm">93 km</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,173 @@
+---
+// src/components/EstateShowcaseScroll.astro
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+const isPt = lang === 'pt';
+
+const intro = {
+  title: isPt ? 'Descubra a Propriedade' : 'Explore the Estate',
+  subtitle: isPt
+    ? 'Onde a Natureza e o Conforto de Casa se Encontram'
+    : 'Where Mountain Serenity Meets Home Comfort',
+  desc1: isPt
+    ? 'Situada em Vilar da Veiga, dentro dos limites do Parque Nacional da Peneda-Gerês, a Residência Casa Feijão é um refúgio acolhedor com vistas desafogadas para as montanhas e para o vale da Caniçada.'
+    : 'Situated in Vilar da Veiga, within the boundaries of Peneda-Gerês National Park, Casa Feijão Guesthouse is a peaceful mountain sanctuary with unobstructed vistas over the valley and Caniçada lake.',
+  desc2: isPt
+    ? 'Cada acomodação possui mobiliário em madeira maciça, aquecimento central para os meses mais frescos e lareiras tradicionais nos apartamentos T1 e T3. Todas as unidades são autónomas com cozinha equipada, churrasqueira exterior e estacionamento privativo gratuito.'
+    : 'Each accommodation is crafted with solid dark wood furniture, central heating for cooler mountain nights, and traditional granite fireplaces in Apartments T1 and T3. All units are fully independent with kitchens, outdoor barbecue, and free private parking.',
+  badge1Val: isPt ? '6 Min a Pé' : '6 Min Walk',
+  badge1Desc: isPt ? 'Da praia fluvial da Caniçada' : 'To Caniçada river beach',
+  badge2Val: '3.7 km',
+  badge2Desc: isPt ? 'Da Cascata do Arado' : 'To Arado Waterfall',
+};
+
+const estatePhotos = [
+  {
+    image: '/images/_geres_casa_feijao_1_poco_azul.jpg',
+    alt: 'Poço Azul - Peneda-Gerês National Park',
+  },
+  {
+    image: '/images/_geres_casa_feijao_2.jpg',
+    alt: 'Casa Feijão Mountain Setting and Valley Vistas',
+  },
+  {
+    image: '/images/_CIMG5915.JPG',
+    alt: 'Traditional Granite Fireplace and Wooden Hearth',
+  },
+  {
+    image: '/images/_fotos 186.JPG',
+    alt: 'Scenic Balcony overlooking Caniçada Lake',
+  },
+  {
+    image: '/images/_casa_feijao_geres_estudio_alojamento_local_1_fotos 143.JPG',
+    alt: 'Casa Feijão Guesthouse Stone Architecture',
+  },
+];
+---
+
+<section id="estate-pin-section" class="relative w-full bg-[#FAFBFD] border-b border-cobalt-100 overflow-hidden">
+  <div class="w-full flex flex-col lg:flex-row items-stretch lg:h-screen pl-4 sm:pl-8 lg:pl-16 pr-0 py-12 lg:py-0 gap-8 lg:gap-12">
+    <!-- Pinned Left Text Column -->
+    <div class="w-full lg:w-[460px] xl:w-[500px] shrink-0 flex flex-col justify-center space-y-5 lg:space-y-6 z-10 bg-[#FAFBFD] pr-4 lg:pr-6">
+      <span class="text-xs font-mono font-bold uppercase tracking-widest text-[#0B357B]">
+        {isPt ? 'Propriedade & Enquadramento' : 'Estate & Natural Setting'}
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-cobalt-950 tracking-tight leading-[1.1]">
+        {intro.title}
+      </h2>
+      <h3 class="text-base sm:text-lg font-serif font-bold text-[#0B357B] leading-snug">
+        {intro.subtitle}
+      </h3>
+      <p class="text-xs sm:text-sm text-granite-600 leading-relaxed font-sans">
+        {intro.desc1}
+      </p>
+      <p class="text-xs sm:text-sm text-granite-600 leading-relaxed font-sans">
+        {intro.desc2}
+      </p>
+
+      <div class="grid grid-cols-2 gap-3.5 pt-2">
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-white border border-cobalt-100 shadow-2xs">
+          <span class="block font-bold text-cobalt-950 text-sm sm:text-base">{intro.badge1Val}</span>
+          <span class="text-xs text-granite-500">{intro.badge1Desc}</span>
+        </div>
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-white border border-cobalt-100 shadow-2xs">
+          <span class="block font-bold text-cobalt-950 text-sm sm:text-base">{intro.badge2Val}</span>
+          <span class="text-xs text-granite-500">{intro.badge2Desc}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Pure Horizontal Images (ONE image at a time, extends all the way to the right edge) -->
+    <div id="estate-photos-viewport" class="w-full flex-1 overflow-x-auto lg:overflow-hidden snap-x snap-mandatory lg:snap-none pr-0 py-2 lg:py-6 scrollbar-none flex items-center">
+      <div id="estate-photos-track" class="flex flex-row items-center w-full h-full">
+        {estatePhotos.map((photo, idx) => (
+          <div class="snap-start snap-always shrink-0 w-full h-full flex items-center justify-end pr-0">
+            <div class="w-full h-[380px] sm:h-[480px] lg:h-[84vh] rounded-l-3xl rounded-r-none overflow-hidden shadow-2xl border-y-2 border-l-2 border-white/90 bg-slate-900 relative group">
+              <img
+                src={photo.image}
+                alt={photo.alt}
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading={idx === 0 ? "eager" : "lazy"}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let stInstance: ScrollTrigger | null = null;
+
+  function initGSAP() {
+    const pinSection = document.getElementById('estate-pin-section');
+    const photosViewport = document.getElementById('estate-photos-viewport');
+    const photosTrack = document.getElementById('estate-photos-track');
+    if (!pinSection || !photosViewport || !photosTrack) return;
+
+    if (stInstance) {
+      stInstance.kill();
+      stInstance = null;
+    }
+
+    // Only apply pinned lateral translation on desktop (>= 1024px)
+    if (window.innerWidth >= 1024) {
+      const slides = photosTrack.children;
+      const count = slides.length;
+
+      if (count > 1) {
+        gsap.to(photosTrack, {
+          xPercent: -100 * (count - 1),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pinSection,
+            pin: true,
+            scrub: 1,
+            snap: 1 / (count - 1),
+            start: 'top top',
+            end: () => `+=${(count - 1) * window.innerHeight * 0.9}`,
+            invalidateOnRefresh: true,
+            onRefresh: (self) => {
+              stInstance = self;
+            },
+          },
+        });
+      }
+    } else {
+      gsap.set(photosTrack, { clearProps: 'all' });
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    initGSAP();
+
+    window.addEventListener('resize', () => {
+      ScrollTrigger.refresh();
+      initGSAP();
+    });
+
+    const observer = new MutationObserver(() => {
+      const bodyEl = document.getElementById('website-body');
+      if (bodyEl && bodyEl.style.display !== 'none') {
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+          initGSAP();
+        }, 150);
+      }
+    });
+
+    const bodyEl = document.getElementById('website-body');
+    if (bodyEl) {
+      observer.observe(bodyEl, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+  }
+</script>

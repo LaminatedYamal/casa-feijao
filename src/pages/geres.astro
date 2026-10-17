@@ -1,0 +1,579 @@
+---
+// src/pages/geres.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import WeatherWidget from '../components/WeatherWidget.astro';
+---
+
+<BaseLayout
+  title="Guia Completo do Gerês • Cascatas, Praias, Trilhos & Gastronomia • Casa Feijão"
+  description="O guia consolidado da Casa Feijão para explorar a Peneda-Gerês: coordenadas GPS do Poço Azul e Cascatas, praias fluviais da Caniçada, termas de Torneros, Via Romana da Geira, São Bento e gastronomia minhota."
+  lang="pt"
+>
+  <!-- Guide Header Hero -->
+  <section class="py-12 sm:py-16 bg-gradient-to-b from-[#FAFBFD] to-white border-b border-cobalt-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Guia do Gerês' }]} lang="pt" className="mb-6" />
+      <div class="text-center max-w-3xl mx-auto">
+        <!-- Clean Text Overline without Pill Box -->
+        <span class="inline-block text-xs font-semibold uppercase tracking-widest text-[#0B357B] mb-3 font-sans">
+          Concierge Local Casa Feijão • Vilar da Veiga
+        </span>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-black text-cobalt-950 tracking-tight">
+          O Guia Definitivo do Gerês
+        </h1>
+      <p class="mt-4 text-sm sm:text-base text-granite-600 leading-relaxed font-sans">
+        Consolidámos os segredos mais bem guardados do Parque Nacional da Peneda-Gerês. Descubra os caminhos pedestres, coordenadas GPS exatas para poços secretos, praias fluviais a passos do nosso alojamento e os melhores sabores minhotos.
+      </p>
+
+      <!-- Navigation Jump Links -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-8 font-sans">
+        <a href="#meteorologia" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm88,80a8,8,0,0,0-16,0v24a8,8,0,0,0,16,0Zm96-88H208a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/>
+          </svg>
+          <span>Meteorologia em Direto</span>
+        </a>
+        <a href="#cascatas" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M174.63,94.34,133.66,53.37a8,8,0,0,0-11.32,0L81.37,94.34a64,64,0,1,0,93.26,0ZM128,208a48,48,0,0,1-33.94-81.94L128,92.11l33.94,33.95A48,48,0,0,1,128,208Z"/>
+          </svg>
+          <span>Cascatas & Lagoas (GPS)</span>
+        </a>
+        <a href="#video-geres" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM56,56H72V80H56Zm0,40H72v24H56Zm0,40H72v24H56Zm0,40H72v24H56Zm144,24H88V56h112Zm16-24H200V176h16Zm0-40H200V136h16Zm0-40H200V96h16Zm0-40H200V56h16Z"/>
+          </svg>
+          <span>Vídeo das Cascatas</span>
+        </a>
+        <a href="#praias" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M239.57,100.43a8,8,0,0,0-11.14.88,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,1,0-12,10.58,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0A8,8,0,0,0,239.57,100.43Zm0,48a8,8,0,0,0-11.14.88,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,1,0-12,10.58,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0A8,8,0,0,0,239.57,148.43Z"/>
+          </svg>
+          <span>Praias Fluviais & Albufeira</span>
+        </a>
+        <a href="#patrimonio" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M208,128a55.93,55.93,0,0,0-17.76-40.75,72,72,0,0,0-124.48,0A56,56,0,0,0,48,184h72v48a8,8,0,0,0,16,0V184h72A56.06,56.06,0,0,0,208,128ZM128,32a56,56,0,0,1,49.88,30.67,8,8,0,0,0,8.74,4.11A40,40,0,0,1,208,128a40.07,40.07,0,0,1-30.86,39,8,8,0,0,0-6.14,6.72A8,8,0,0,0,172,168H84a8,8,0,0,0,1-1.28,8,8,0,0,0-6.14-6.72A40.07,40.07,0,0,1,48,128a40,40,0,0,1,21.38-35.22,8,8,0,0,0,8.74-4.11A56,56,0,0,1,128,32Z"/>
+          </svg>
+          <span>Serra, Mata & Geira Romana</span>
+        </a>
+        <a href="#termas-santuario" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M213.85,125.46l-65.31-24-24-65.31a8,8,0,0,0-15,0l-24,65.31-65.31,24a8,8,0,0,0,0,15.08l65.31,24,24,65.31a8,8,0,0,0,15,0l24-65.31,65.31-24A8,8,0,0,0,213.85,125.46Z"/>
+          </svg>
+          <span>Termas & São Bento da Porta Aberta</span>
+        </a>
+        <a href="#gastronomia" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-cobalt-200 text-xs font-semibold text-[#0B357B] hover:bg-cobalt-50 shadow-2xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+            <path d="M208,88a80.11,80.11,0,0,1-72,79.6V208h24a8,8,0,0,1,0,16H96a8,8,0,0,1,0-16h24V167.6A80.11,80.11,0,0,1,48,88V40a8,8,0,0,1,8-8H200a8,8,0,0,1,8,8ZM64,48V88a64,64,0,0,0,128,0V48Z"/>
+          </svg>
+          <span>Gastronomia & Vinhos Minhotos</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+    <!-- SECTION 0: LIVE WEATHER WIDGET -->
+    <section id="meteorologia" class="scroll-mt-36">
+      <WeatherWidget
+        lang="pt"
+        title="Previsão Meteorológica no Parque Nacional"
+        subtitle="Condições atmosféricas em tempo real para planeamento de caminhadas, banhos nas lagoas e passeios de barco"
+      />
+    </section>
+
+    <!-- SECTION 1: CASCATAS & LAGOAS SECRETAS (COM GPS E FOTOS REAIS) -->
+    <section id="cascatas" class="scroll-mt-36 space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Natureza Selvagem</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-black text-cobalt-950 mt-1">
+          Cascatas & Lagoas Naturais do Gerês
+        </h2>
+        <p class="text-xs sm:text-sm text-granite-600 mt-2 font-sans">
+          Águas cristalinas nascidas nas cumeadas graníticas da serra. Guarde estas coordenadas de satélite no seu GPS:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Poço Azul -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_Poçoazulgeres.jpg"
+                alt="Poço Azul no Gerês"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                Trilho PR14 • 16 km
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">O Mítico Poço Azul</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">Lagoa Turquesa</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                Um dos locais mais sagrados da serra. Acesso exclusivamente a pé a partir de Ermida pelo PR14 (Sobreiral da Ermida), passando pela Fonte do Arado e Tribela até ao Rio Conho, onde um poço de azul profundo recompensa o esforço.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">GPS: 41°44'00.6"N 8°06'25.3"W</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cascata do Arado -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_Cascatadoarado2.jpg"
+                alt="Cascata do Arado"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                A 3,7 km da Casa Feijão
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">Cascata do Arado</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">900m Altitude</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                Situada a 900 metros de altitude no Rio Arado. Uma sucessão impressionante de quedas de água rasgando o maciço rochoso até a uma bacia transparente. Acesso fácil a partir da aldeia da Ermida até à ponte do Arado com escadaria e miradouro.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">GPS: 41°43'28.5"N 8°07'47.0"W</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- As 7 Lagoas do Gerês -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_7lagoasdogeres_CASA_FEIJAO_GERES.jpg"
+                alt="As 7 Lagoas do Gerês Cabril"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                Cabril • 12 km A Pé / 4x4
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">As 7 Lagoas de Cabril</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">7 Bacias Naturais</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                De todas as maravilhas aquáticas da serra, as 7 Lagoas são as mais fascinantes. Sete piscinas esculpidas no leito de granito ao longo do rio de montanha. Acesso a pé ou jipe todo-o-terreno a partir de Cabril.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">Cabril, Montalegre</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cascata Tahiti (Fecha de Barjas) -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_Cascata-do-Tahiti-5.jpg"
+                alt="Cascata Tahiti Fecha de Barjas"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                A 4,8 km da Casa Feijão
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">Cascata Tahiti (Fecha de Barjas)</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">Areia & Moinhos</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                No Rio Arado, caminho para Cabril. Descida a pé a partir da ponte de madeira com vestígios de moinhos rústicos e lagoas de areia fina de rio ideais para mergulhos nos dias de verão.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">Rio Arado, Vilar da Veiga</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cascata Rio Homem / Leonte -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_cascatariohomem3.jpg"
+                alt="Cascata Rio Homem Leonte"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                Mata da Albergaria
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">Cascata Rio Homem / Leonte</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">Saltos de 10m</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                Junto à ponte na estrada para a Portela do Homem, a cerca de 2 km da fronteira com Espanha. Lagoa profunda de montanha rodeada por vegetação exuberante, muito procurada para saltos.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">GPS: 41°48'12.0"N 8°07'43.9"W</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Termas de Torneros (Piscinas Naturais Quentes) -->
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden border border-cobalt-100 shadow-tile flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="/images/_TornerosAguasquentes3.jpg"
+                alt="Termas de Torneros Aguas Quentes"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Tag Always Blue -->
+              <div class="absolute top-3 left-3 bg-[#0B357B] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs font-sans">
+                Água Quente ao Ar Livre
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-serif font-bold text-cobalt-950">Torneros – Banheira Quente</h3>
+                <span class="text-[10px] font-sans font-semibold bg-cobalt-50 text-[#0B357B] border border-cobalt-200/60 px-2 py-0.5 rounded">Público & Grátis</span>
+              </div>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans">
+                Nas imediações da Portela do Homem, em plena Serra do Xurés. Termas públicas gratuitas com piscinas de água termal quente natural a céu aberto com parque de merendas e rio adjacente para contraste térmico.
+              </p>
+            </div>
+          </div>
+          <!-- Clean GPS without background pill -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-center gap-1.5 text-xs text-granite-600 font-sans">
+              <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,202.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
+              </svg>
+              <span class="font-mono text-[11px] font-semibold text-cobalt-950">GPS: 41°51'45.1"N 8°06'23.6"W</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 2: VÍDEO DAS CASCATAS DO GERÊS -->
+    <section id="video-geres" class="scroll-mt-36">
+      <div class="bg-[#FAFBFD] rounded-3xl border border-cobalt-100 p-6 sm:p-10 shadow-tile space-y-6">
+        <div class="text-center max-w-2xl mx-auto">
+          <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Arquivo Multimédia Oficial</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-black text-cobalt-950 mt-1">
+            Vídeo: As Mais Belas Cascatas do Gerês
+          </h2>
+          <p class="text-xs sm:text-sm text-granite-600 mt-2 font-sans">
+            Veja as correntes de água cristalina, as lagoas virgens e a grandiosidade geológica que espera por si a escassos minutos da Casa Feijão.
+          </p>
+        </div>
+
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border-2 border-white max-w-4xl mx-auto">
+          <iframe
+            src="https://www.youtube.com/embed/S7oHZMoIGYs"
+            title="Cascatas do Parque Nacional da Peneda-Gerês"
+            class="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PRAIAS FLUVIAIS & DESPORTOS NÁUTICOS -->
+    <section id="praias" class="scroll-mt-36 space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Albufeira da Caniçada</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-black text-cobalt-950 mt-1">
+          Praias Fluviais & Desportos Náuticos
+        </h2>
+        <p class="text-xs sm:text-sm text-granite-600 mt-2 font-sans">
+          Águas amenas, praias de areia dourada e desportos para todas as idades a poucos passos do alojamento.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M239.57,100.43a8,8,0,0,0-11.14.88,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,1,0-12,10.58,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0A8,8,0,0,0,239.57,100.43Zm0,48a8,8,0,0,0-11.14.88,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,1,0-12,10.58,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0A8,8,0,0,0,239.57,148.43Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Praia do Boco</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            Situada junto à histórica Ponte de Parada (Ponte do Boco). Águas calmas, pouco profundas e com vasta arborização de sombra.
+          </p>
+          <div class="pt-2 border-t border-cobalt-50 font-semibold text-xs text-[#0B357B] font-sans flex items-center gap-1.5">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M141.25,123.2,168,145.49V216a8,8,0,0,1-16,0V152.51L128,132.51l-24,20V216a8,8,0,0,1-16,0V146.51a8,8,0,0,1,2.8-6.14l32-26.67V88H80a8,8,0,0,1,0-16h48a8,8,0,0,1,8,8v34.4l5.25,4.38ZM128,24a20,20,0,1,0,20,20A20,20,0,0,0,128,24Z"/>
+            </svg>
+            <span>A apenas 6 minutos a pé da Casa Feijão</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M239.63,161.42l-21.75-76.12A16,16,0,0,0,202.5,74.19l-66.5,7.39V24a8,8,0,0,0-16,0V83.37L53.5,74.19A16,16,0,0,0,38.12,85.3L16.37,161.42A16,16,0,0,0,31.75,182H224.25a16,16,0,0,0,15.38-20.58ZM31.75,166l21.75-76.12,66.5,7.39v68.73ZM136,166V97.27l66.5-7.39L224.25,166Zm96,34H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Praias de Rio Caldo & Alqueirão</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            O coração recreativo da albufeira: marinas, aluguer de barcos elétricos e a motor, motas de água, boias puxadas e restaurantes à beira da água.
+          </p>
+          <div class="pt-2 border-t border-cobalt-50 font-semibold text-xs text-[#0B357B] font-sans flex items-center gap-1.5">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M240,112H229.2L201.42,49.5A16,16,0,0,0,186.8,40H69.2a16,16,0,0,0-14.62,9.5L26.8,112H16a8,8,0,0,0,0,16h8v80a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V192h96v16a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM69.2,56H186.8l24.89,56H44.31ZM64,192H40V128H64Zm152,0H192V128h24Zm-144-48a16,16,0,1,1,16,16A16,16,0,0,1,72,144Zm96,16a16,16,0,1,1,16-16A16,16,0,0,1,168,160Z"/>
+            </svg>
+            <span>A 3,6 km • Amplo estacionamento e marina</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M239.63,161.42l-21.75-76.12A16,16,0,0,0,202.5,74.19l-66.5,7.39V24a8,8,0,0,0-16,0V83.37L53.5,74.19A16,16,0,0,0,38.12,85.3L16.37,161.42A16,16,0,0,0,31.75,182H224.25a16,16,0,0,0,15.38-20.58ZM31.75,166l21.75-76.12,66.5,7.39v68.73ZM136,166V97.27l66.5-7.39L224.25,166Zm96,34H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Praia da Ilha & Vilarinho</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            Uma ilhota idílica com gaivotas e caiaques entre Rio Caldo e a Vila do Gerês. Mais a norte, a praia selvagem de Vilarinho das Furnas, junto à aldeia submersa.
+          </p>
+          <div class="pt-2 border-t border-cobalt-50 font-semibold text-xs text-[#0B357B] font-sans flex items-center gap-1.5">
+            <svg class="w-4 h-4 fill-current text-[#0B357B] shrink-0" viewBox="0 0 256 256">
+              <path d="M239.57,100.43a8,8,0,0,0-11.14.88,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,0,0-11.14,0,44,44,0,0,1-64.86,0,8,8,0,1,0-12,10.58,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0,59.89,59.89,0,0,0,88.86,0A8,8,0,0,0,239.57,100.43Z"/>
+            </svg>
+            <span>Canoagem, gaivotas e passeios no rio</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: SERRA, MATA & GEIRA ROMANA -->
+    <section id="patrimonio" class="scroll-mt-36 space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Património Mundial & Botânica</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-black text-cobalt-950 mt-1">
+          Mata da Albergaria, Geira Romana & Espigueiros
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4 text-xs sm:text-sm text-granite-700 leading-relaxed font-sans">
+          <div class="p-6 rounded-3xl bg-[#FAFBFD] border border-cobalt-100 space-y-3">
+            <h3 class="text-xl font-serif font-bold text-cobalt-950">Mata de Albergaria (Reserva Biogenética)</h3>
+            <p>
+              Um dos carvalhais mais valiosos e intactos da Europa. Árvores seculares, musgos e líquenes preservados há centenas de anos. O percurso pedestre é de acesso condicionado para proteger a biodiversidade florestal.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-[#FAFBFD] border border-cobalt-100 space-y-3">
+            <h3 class="text-xl font-serif font-bold text-cobalt-950">Geira Romana (Via XVIII de Antonino)</h3>
+            <p>
+              Estrada militar do Império Romano com 30 km milagrosamente conservados que ligava <em>Bracara Augusta</em> (Braga) a <em>Asturica Augusta</em> (Astorga). Contém a maior concentração de marcos miliários epigráficos de todo o Império Romano.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-[#FAFBFD] border border-cobalt-100 space-y-3">
+            <h3 class="text-xl font-serif font-bold text-cobalt-950">Espigueiros Tradicionais do Soajo e Lindoso</h3>
+            <p>
+              Construções centenárias em cantaria de granito implantadas em lajes comunitárias, concebidas para proteger as colheitas de milho dos roedores e da humidade da serra.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-2xl overflow-hidden shadow-tile border-2 border-white h-56">
+            <img src="/images/_Mata-da-Albergaria.jpg" alt="Mata da Albergaria" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="rounded-2xl overflow-hidden shadow-tile border-2 border-white h-56">
+            <img src="/images/_Espigueiros_Soajo.jpg" alt="Espigueiros do Soajo" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="col-span-2 rounded-2xl overflow-hidden shadow-tile border-2 border-white h-56">
+            <img src="/images/_pousada-do-geres-canicada.jpg" alt="Miradouro da Caniçada" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: TERMALISMO & SANTUÁRIO DE SÃO BENTO DA PORTA ABERTA -->
+    <section id="termas-santuario" class="scroll-mt-36 space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Tradição & Devoção</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-black text-cobalt-950 mt-1">
+          Termalismo da Vila do Gerês & São Bento da Porta Aberta
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Termas do Gerês -->
+        <article class="p-8 rounded-3xl bg-white border border-cobalt-100 shadow-tile space-y-4">
+          <div class="flex items-center justify-between font-sans">
+            <span class="text-xs font-semibold text-[#0B357B]">Desde a Época Romana</span>
+            <span class="text-xs text-granite-500">2,5 km da Casa Feijão</span>
+          </div>
+          <h3 class="text-2xl font-serif font-bold text-cobalt-950">Estabelecimento Termal do Gerês</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            As águas hipotérmicas do Gerês têm tradição terapêutica secular comprovada. O primeiro balneário oficial foi erguido no século XVIII. Hoje, o moderno complexo termal disponibiliza programas de bem-estar, hidroterapia, massagens relaxantes e duches escoceses no centro da Vila.
+          </p>
+        </article>
+
+        <!-- São Bento da Porta Aberta -->
+        <article class="p-8 rounded-3xl bg-white border border-cobalt-100 shadow-tile space-y-4">
+          <div class="flex items-center justify-between font-sans">
+            <span class="text-xs font-semibold text-emerald-700">2,5 Milhões de Peregrinos</span>
+            <span class="text-xs text-granite-500 font-mono">GPS: 41°41’24.6″N 8°12’11.1″W</span>
+          </div>
+          <h3 class="text-2xl font-serif font-bold text-cobalt-950">Santuário de São Bento da Porta Aberta</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            O segundo maior santuário de Portugal, fundado em 1615 com portas sempre abertas aos viajantes e peregrinos da serra. Famoso pela singular tradição das ofertas de sal e pelas grandes romarias de Março, Julho e Agosto.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 6: GASTRONOMIA MINHOTA & SABORES DA SERRA -->
+    <section id="gastronomia" class="scroll-mt-36 space-y-8">
+      <div class="border-b border-cobalt-100 pb-4">
+        <span class="text-xs font-sans uppercase tracking-widest text-[#0B357B] font-semibold">Mesa Farta Minhota</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-black text-cobalt-950 mt-1">
+          Gastronomia & Vinhos de Terras de Bouro
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M248,112H232V96a16,16,0,0,0-16-16H168a8,8,0,0,0,0,16h48v16H136V48a8,8,0,0,0-16,0v64H40V96H88a8,8,0,0,0,0-16H40A16,16,0,0,0,24,96v16H8a8,8,0,0,0,0,16H24v72a32,32,0,0,0,32,32H200a32,32,0,0,0,32-32V128h16a8,8,0,0,0,0-16Zm-32,88a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V128H216Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Cozido à Moda do Gerês & Vitela</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            Cozido à portuguesa com carnes fumadas de fumeiro de montanha, couves pencas e enchidos artesanais. Posta de vitela barrosã grelhada no ponto com batatas a murro.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M239.9,134.73a8,8,0,0,0-5.1-6.19C211.75,119.83,181.82,120,154,128.75V104a8,8,0,0,0-14.77-4.22L121,126.83A144,144,0,0,0,16,80a8,8,0,0,0-6.83,12.16C23.94,116.89,40,148.65,40,176a79.66,79.66,0,0,0,13.62,44.75,8,8,0,0,0,13.31-1.32C77.4,198.8,96.34,188.75,121,185.17l18.23,27.05A8,8,0,0,0,154,208V183.25c27.82,8.75,57.75,8.92,80.8-2.79A8,8,0,0,0,239.9,134.73ZM138,190.58l-15.54-23a8,8,0,0,0-8.88-3.13c-27.42,7.31-48.49,20.4-60.77,38.25A64.38,64.38,0,0,1,56,176c0-26.68-15.69-57.17-29.74-78.29A127.8,127.8,0,0,1,113.58,143a8,8,0,0,0,8.88-3.13L138,121.42V190.58Zm86-27.46C204.38,171.74,180.12,171,154,164.21V147.79c26.12-6.79,50.38-7.53,70,1.09Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Trutas do Rio Cávado & Cabrito</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            Trutas frescas pescadas nos rios de montanha, fritas ou de escabeche. Cabrito assado no forno de lenha com arroz de miúdos, tradição dos dias de festa no Minho.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cobalt-100 shadow-tile space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-cobalt-50 text-[#0B357B] flex items-center justify-center font-bold text-xl">
+            <svg class="w-6 h-6 fill-current text-[#0B357B]" viewBox="0 0 256 256">
+              <path d="M208,88a80.11,80.11,0,0,1-72,79.6V208h24a8,8,0,0,1,0,16H96a8,8,0,0,1,0-16h24V167.6A80.11,80.11,0,0,1,48,88V40a8,8,0,0,1,8-8H200a8,8,0,0,1,8,8ZM64,48V88a64,64,0,0,0,128,0V48Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-cobalt-950">Vinho Verde de Terras de Bouro</h3>
+          <p class="text-xs text-granite-600 leading-relaxed font-sans">
+            Vinho verde branco e tinto da casta Loureiro e Vinhão, produzido nas encostas do vale do Cávado e Homem. Ideal para acompanhar o fumeiro da serra e broa de milho.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION BANNER WITH OFFICIAL WHATSAPP LOGO -->
+    <section class="rounded-3xl bg-gradient-to-r from-[#003366] via-[#0B2545] to-[#0047AB] text-white p-8 sm:p-12 text-center relative overflow-hidden shadow-tile" style="background: linear-gradient(135deg, #003366 0%, #0B2545 50%, #0047AB 100%);">
+      <div class="max-w-2xl mx-auto space-y-4 relative z-10">
+        <h3 class="text-2xl sm:text-3xl font-serif font-black">
+          Faça da Casa Feijão a Sua Base no Gerês
+        </h3>
+        <p class="text-xs sm:text-sm text-cobalt-100 leading-relaxed font-sans">
+          Estúdios e apartamentos acolhedores com cozinhas equipadas, lareira e vistas inspiradoras para repousar depois de um dia de exploração.
+        </p>
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 font-sans">
+          <a
+            href="/acomodacoes"
+            class="inline-flex items-center gap-1.5 px-6 py-3.5 rounded-full bg-white text-[#0B357B] hover:bg-cobalt-50 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+          >
+            <span>Ver Acomodações & Preços</span>
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 256 256">
+              <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/>
+            </svg>
+          </a>
+          <!-- Official WhatsApp Logo CTA -->
+          <a
+            href="https://wa.me/351933176678"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm group"
+          >
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8.01 12.27C8.14 12.44 9.76 14.94 12.24 16C12.83 16.27 13.28 16.42 13.64 16.53C14.25 16.73 14.8 16.7 15.24 16.63C15.73 16.56 16.74 16.02 16.95 15.43C17.16 14.84 17.16 14.34 17.1 14.23C17.04 14.12 16.88 14.06 16.64 13.94C16.4 13.82 15.21 13.23 14.99 13.15C14.77 13.07 14.61 13.03 14.45 13.27C14.29 13.51 13.82 14.06 13.68 14.23C13.54 14.39 13.4 14.41 13.16 14.29C12.92 14.17 12.15 13.92 11.24 13.11C10.53 12.48 10.05 11.7 9.91 11.46C9.77 11.22 9.9 11.09 10.02 10.97C10.13 10.86 10.27 10.68 10.39 10.54C10.5 10.4 10.55 10.3 10.63 10.14C10.71 9.97 10.67 9.83 10.61 9.71C10.55 9.59 10.08 8.42 9.88 7.95C9.69 7.49 9.49 7.55 9.34 7.54C9.2 7.54 9.04 7.33 8.53 7.33Z"/>
+            </svg>
+            <span>Falar no WhatsApp (+351 933 176 678)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

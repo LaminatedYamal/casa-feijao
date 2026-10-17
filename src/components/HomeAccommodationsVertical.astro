@@ -1,0 +1,90 @@
+---
+// src/components/HomeAccommodationsVertical.astro
+import { rooms } from '../data/rooms';
+import RoomAmenitiesList from './RoomAmenitiesList.astro';
+
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+const isPt = lang === 'pt';
+const allAccommodationsUrl = isPt ? '/acomodacoes' : '/en/accommodations';
+---
+
+<section class="py-20 bg-porcelain border-b border-cobalt-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs font-sans font-semibold uppercase tracking-widest text-[#0B357B]">
+        {isPt ? 'Tipologias Independentes' : 'Independent Living Spaces'}
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-cobalt-950 font-bold mt-2">
+        {isPt ? 'Escolha o Seu Espaço no Gerês' : 'Choose Your Space in Gerês'}
+      </h2>
+      <p class="mt-4 text-granite-600 text-sm sm:text-base leading-relaxed font-sans">
+        {isPt
+          ? 'Estúdios aconchegantes para escapadinhas a dois ou apartamentos amplos com lareira tradicional para toda a família.'
+          : 'Cozy mountain studios for couples or spacious residences with stone fireplaces for family retreats.'}
+      </p>
+    </div>
+
+    <!-- 3 Vertical Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+      {rooms.map((room) => (
+        <article class="bg-white rounded-3xl overflow-hidden shadow-tile border border-cobalt-100 flex flex-col justify-between group hover:shadow-tile-hover transition-all duration-300">
+          <div>
+            <!-- Room Image with Price Badge -->
+            <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-900">
+              <img
+                src={room.featuredImage}
+                alt={isPt ? room.titlePt : room.titleEn}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute bottom-4 right-4 bg-[#0B357B] text-white px-4 py-1.5 rounded-xl text-xs font-sans font-semibold shadow-md">
+                <span>{isPt ? 'desde' : 'from'}</span>
+                <span class="text-base text-amber-300 font-bold ml-1">{room.pricePerNight}€</span>
+                <span class="text-[10px] text-slate-200 font-normal">/{isPt ? 'noite' : 'night'}</span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6 sm:p-7">
+              <span class="text-[11px] font-sans font-semibold uppercase tracking-wider text-[#0B357B] block mb-1">
+                {isPt ? room.subtitlePt : room.subtitleEn}
+              </span>
+              <h3 class="text-2xl font-serif font-black text-cobalt-950 tracking-tight group-hover:text-[#0B357B] transition-colors">
+                {isPt ? room.titlePt : room.titleEn}
+              </h3>
+              <p class="text-xs text-granite-500 font-medium mt-1 mb-3">
+                {isPt ? room.capacity.bedsPt : room.capacity.bedsEn} {room.area ? `• ${room.area}` : ''}
+              </p>
+              <p class="text-xs text-granite-600 leading-relaxed font-sans line-clamp-3">
+                {isPt ? room.descriptionPt : room.descriptionEn}
+              </p>
+
+              <!-- Animated Amenities (Animated SVG icons, 1-2 words, zero background boxes) -->
+              <div class="mt-4">
+                <RoomAmenitiesList slug={room.slug} lang={lang} />
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Single Prominent "Find Out More" Button Underneath the 3 Cards -->
+    <div class="mt-14 text-center">
+      <a
+        href={allAccommodationsUrl}
+        class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#0B357B] hover:bg-[#1A54A6] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-xl active:scale-98 group"
+      >
+        <span>{isPt ? 'Descubra Todas as Acomodações & Comparador' : 'Explore All Accommodations & Comparator'}</span>
+        <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>

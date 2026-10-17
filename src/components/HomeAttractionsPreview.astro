@@ -1,0 +1,107 @@
+---
+// src/components/HomeAttractionsPreview.astro
+interface Props {
+  lang?: 'pt' | 'en';
+}
+
+const { lang = 'pt' } = Astro.props;
+const isPt = lang === 'pt';
+const geresUrl = isPt ? '/geres' : '/en/geres';
+
+const attractions = [
+  {
+    title: isPt ? 'Poço Azul & Cascata do Arado' : 'Poço Azul & Arado Waterfall',
+    subtitle: isPt ? 'Cascatas & Lagoas Secretas' : 'Secret Lagoons & Waterfalls',
+    desc: isPt
+      ? 'Águas cristalinas verde-esmeralda e imponentes cascatas de montanha ideais para banhos revigorantes em plena serra.'
+      : 'Emerald mountain lagoons and dramatic granite cascades, perfect for invigorating dips in protected nature.',
+    badge: isPt ? '3.7 km • Poço Azul' : '3.7 km • Secret Lagoons',
+    image: '/images/_poco_azul_geres.jpg',
+  },
+  {
+    title: isPt ? 'Praia Fluvial da Caniçada' : 'Caniçada River Beach & Lake',
+    subtitle: isPt ? 'A 6 Minutos a Pé da Residência' : '6-Minute Walk from Guesthouse',
+    desc: isPt
+      ? 'Praia de albufeira com águas calmas para banhos, aluguer de kayaks, passeios de barco e marina a escassos passos.'
+      : 'Warm lake beach with calm waters for swimming, kayak rentals, scenic boat tours, and water sports at your doorstep.',
+    badge: isPt ? '6 Min a pé • Rio Caldo' : '6 Min walk • Marina & Beach',
+    image: '/images/_Praia-Rio-Caldo-1.jpg',
+  },
+  {
+    title: isPt ? 'Termas do Gerês & Torneros' : 'Gerês & Torneros Thermal Baths',
+    subtitle: isPt ? 'Águas Termais & Bem-Estar' : 'Natural Hot Springs & Wellness',
+    desc: isPt
+      ? 'Piscinas termais naturais a céu aberto e histórica estância termal no vale, proporcionando relaxamento medicinal profundo.'
+      : 'Natural outdoor hot thermal pools and historic alpine spa waters in the valley for complete body rejuvenation.',
+    badge: isPt ? 'Termalismo • Spa Natural' : 'Hot Springs • Natural Spa',
+    image: '/images/_TornerosAguasquentes3.jpg',
+  },
+];
+---
+
+<section class="py-20 bg-white border-b border-cobalt-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs font-sans font-semibold uppercase tracking-widest text-[#0B357B]">
+        {isPt ? 'Parque Nacional da Peneda-Gerês' : 'Peneda-Gerês National Park'}
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-cobalt-950 font-bold mt-2">
+        {isPt ? 'Top 3 Atrações à Porta de Casa' : 'Top 3 Attractions at Your Doorstep'}
+      </h2>
+      <p class="mt-4 text-granite-600 text-sm sm:text-base leading-relaxed font-sans">
+        {isPt
+          ? 'Descubra os recantos mais deslumbrantes de Vilar da Veiga, desde lagoas esmeralda e praias fluviais a termas naturais.'
+          : 'Experience the most iconic sights of Vilar da Veiga, from crystal lagoons and lake beaches to open-air hot springs.'}
+      </p>
+    </div>
+
+    <!-- 3 Vertical Attraction Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+      {attractions.map((attraction) => (
+        <article class="bg-[#FAFBFD] rounded-3xl overflow-hidden shadow-tile border border-cobalt-100 flex flex-col justify-between group hover:shadow-tile-hover transition-all duration-300">
+          <div>
+            <!-- Attraction Image with Blue Badge -->
+            <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-900">
+              <img
+                src={attraction.image}
+                alt={attraction.title}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute bottom-4 left-4 bg-[#0B357B] px-3.5 py-1.5 rounded-xl text-white text-xs font-sans font-semibold shadow-md">
+                {attraction.badge}
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6 sm:p-7">
+              <span class="text-[11px] font-sans font-semibold uppercase tracking-wider text-[#0B357B] block mb-1">
+                {attraction.subtitle}
+              </span>
+              <h3 class="text-2xl font-serif font-black text-cobalt-950 tracking-tight group-hover:text-[#0B357B] transition-colors">
+                {attraction.title}
+              </h3>
+              <p class="text-xs sm:text-sm text-granite-600 leading-relaxed font-sans mt-3">
+                {attraction.desc}
+              </p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Single Prominent "Find Out More" Button Underneath the 3 Cards -->
+    <div class="mt-14 text-center">
+      <a
+        href={geresUrl}
+        class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#0B357B] hover:bg-[#1A54A6] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-xl active:scale-98 group font-sans"
+      >
+        <span>{isPt ? 'Explorar o Guia Completo do Gerês' : 'Explore the Full Gerês Guide'}</span>
+        <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>

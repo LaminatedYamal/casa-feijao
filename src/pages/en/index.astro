@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AzulejoHeroMural } from '../../components/AzulejoHeroMural';
+import HomePanoramicHero from '../../components/HomePanoramicHero.astro';
+import HomeAccommodationsVertical from '../../components/HomeAccommodationsVertical.astro';
+import HomeAttractionsPreview from '../../components/HomeAttractionsPreview.astro';
+import BookingReviewsTicker from '../../components/BookingReviewsTicker.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Guest Sanctuary in Gerês • Apartments & Mountain Studios"
+  description="Located in Peneda-Gerês National Park in Vilar da Veiga, Casa Feijão offers cozy studios and apartments with panoramic mountain views, fireplaces, and free Wi-Fi."
+  lang="en"
+  isHeroMuralPage={true}
+>
+  <!-- THE WHOLE ABOVE THE FOLD HERO IS THE PORTUGUESE AZULEJO MURAL WITH FLUSH DOCKED BOOKING BAR -->
+  <section class="w-full relative">
+    <AzulejoHeroMural client:load lang="en" />
+  </section>
+
+  <!-- WEBSITE CONTENT: REVEALED ONCE MURAL IS ENTERED -->
+  <div id="website-body" class="relative z-20 min-h-screen bg-[#FAFBFD] pt-28 sm:pt-36 transition-opacity duration-700 ease-out" style="display: none; opacity: 0;">
+    <!-- SECTION 1: 4K PANORAMIC HERO OF CANIÇADA LAKE & GERÊS WITH DOCKED BOOKING BAR -->
+    <HomePanoramicHero lang="en" />
+
+    <!-- SECTION 2: 3 VERTICAL ACCOMMODATION CARDS WITH SINGLE "FIND OUT MORE" BUTTON -->
+    <HomeAccommodationsVertical lang="en" />
+
+    <!-- SECTION 3: TOP 3 GERÊS ATTRACTIONS WITH SINGLE "FIND OUT MORE" BUTTON -->
+    <HomeAttractionsPreview lang="en" />
+
+    <!-- SECTION 4: BOOKING.COM 8.9 PRE-FOOTER REVIEWS -->
+    <BookingReviewsTicker lang="en" />
+
+    <!-- SECTION 5: STREAMLINED 3-COLUMN FOOTER -->
+    <Footer lang="en" />
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.production
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Root scratch extraction scripts and dumps
+/*.py
+/__pycache__/
+/*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+/CONTENT_EXTRACTION.md
+/pages_body_copy.txt
+/3174.eps
+/3174.jpg
+/images/

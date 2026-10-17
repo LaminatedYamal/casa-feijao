@@ -1,0 +1,136 @@
+---
+// src/pages/acomodacoes/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { rooms } from '../../data/rooms';
+import { BookingBar } from '../../components/BookingBar';
+import { RoomGalleryLightbox } from '../../components/RoomGalleryLightbox';
+
+export async function getStaticPaths() {
+  return rooms.map((room) => ({
+    params: { slug: room.slug },
+    props: { room },
+  }));
+}
+
+const { room } = Astro.props;
+---
+
+<BaseLayout
+  title={`${room.titlePt} - Alojamento no Gerês`}
+  description={room.descriptionPt}
+  image={room.galleryImages[0]}
+  lang="pt"
+>
+  <!-- Hero / Header Section -->
+  <section class="py-10 bg-gradient-to-b from-cobalt-50/50 to-white border-b border-granite-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <Breadcrumbs
+            items={[
+              { label: 'Acomodações', href: '/acomodacoes' },
+              { label: room.titlePt },
+            ]}
+            lang="pt"
+            className="mb-3"
+          />
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-cobalt-950 tracking-tight">
+            {room.titlePt}
+          </h1>
+          <p class="text-sm sm:text-base text-granite-600 mt-2 font-sans">
+            {room.subtitlePt}
+          </p>
+        </div>
+
+        <!-- Clean Unified Price Pill -->
+        <div class="bg-cobalt-50/80 border border-cobalt-200/90 px-5 py-3 rounded-2xl flex items-center gap-4 shadow-2xs self-start md:self-auto">
+          <div>
+            <span class="text-[11px] font-sans font-semibold uppercase tracking-wider text-[#0B357B] block">Preço por noite</span>
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span class="text-xs font-sans text-granite-600 font-medium">desde</span>
+              <span class="text-2xl font-sans font-bold text-cobalt-950">{room.pricePerNight}€</span>
+            </div>
+          </div>
+          <a
+            href="#reservar"
+            class="px-5 py-2.5 rounded-xl bg-[#0B357B] hover:bg-cobalt-800 text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-xs font-sans"
+          >
+            Reservar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery Grid with Interactive Lightbox -->
+  <section class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <RoomGalleryLightbox client:load images={room.galleryImages} roomTitle={room.titlePt} lang="pt" />
+  </section>
+
+  <!-- Details & Booking Layout -->
+  <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- Left Column: Details -->
+      <div class="lg:col-span-7 space-y-10">
+        <!-- Highlights Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-porcelain border border-cobalt-100 text-center font-sans">
+          <div>
+            <span class="text-[10px] font-sans font-semibold uppercase tracking-wider text-granite-500 block">Capacidade</span>
+            <span class="text-xs font-bold text-cobalt-950">{room.capacity.adults} Adultos + Camas Extra</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-sans font-semibold uppercase tracking-wider text-granite-500 block">Tipologia</span>
+            <span class="text-xs font-bold text-cobalt-950">{room.capacity.bedsPt}</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-sans font-semibold uppercase tracking-wider text-granite-500 block">Vistas</span>
+            <span class="text-xs font-bold text-cobalt-950">Montanha e Rio</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-sans font-semibold uppercase tracking-wider text-granite-500 block">Praia Fluvial</span>
+            <span class="text-xs font-bold text-cobalt-950">A 6 min a pé</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-cobalt-950 mb-3">Sobre esta acomodação</h2>
+          <p class="text-sm text-granite-700 leading-relaxed font-sans">
+            {room.descriptionPt}
+          </p>
+        </div>
+
+        <!-- Amenities Checklist -->
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-cobalt-950 mb-4">Comodidades e Equipamentos</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {room.amenitiesPt.map((amenity) => (
+              <div class="flex items-center gap-2 text-xs text-granite-700 p-2.5 rounded-xl bg-white border border-granite-200 font-sans">
+                <span class="text-[#0B357B] font-bold">✓</span>
+                <span>{amenity}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Policies -->
+        <div class="p-6 rounded-2xl bg-cobalt-50/60 border border-cobalt-100 space-y-3 text-xs text-granite-700 font-sans">
+          <h3 class="font-serif font-bold text-base text-cobalt-950">Condições de Estadia</h3>
+          <p>• <strong>Check-in:</strong> 16:00 – 20:00 | <strong>Check-out:</strong> 08:00 – 11:00</p>
+          <p>• <strong>Roupa de cama e toalhas:</strong> Fornecidas gratuitamente.</p>
+          <p>• <strong>Crianças:</strong> Menos de 2 anos grátis em berço (mediante pedido). Camas extra disponíveis por 10€ (3-12 anos) ou 15€ (+13 anos).</p>
+          <p>• <strong>Animais:</strong> Não são admitidos animais de estimação.</p>
+          <p>• <strong>Pagamento:</strong> No local em numerário ou transferência prévia.</p>
+        </div>
+      </div>
+
+      <!-- Right Column: Booking Box Sticky with Sidebar Layout -->
+      <div class="lg:col-span-5" id="reservar">
+        <div class="sticky top-28 space-y-6">
+          <BookingBar client:load lang="pt" defaultRoomId={room.id} layout="sidebar" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
