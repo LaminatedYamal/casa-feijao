@@ -97,7 +97,12 @@ const jsonLd = {
             const userLangs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'pt'];
             const primaryLang = (userLangs[0] || 'pt').toLowerCase();
             const isPtBrowser = primaryLang.startsWith('pt');
-            const path = window.location.pathname.replace(/\/$/, '') || '/';
+            const basePath = window.location.pathname.startsWith('/casa-feijao') ? '/casa-feijao' : '';
+            let rawPath = window.location.pathname.replace(/\/$/, '') || '/';
+            if (basePath && rawPath.startsWith(basePath)) {
+              rawPath = rawPath.slice(basePath.length) || '/';
+            }
+            const path = rawPath;
 
             const ptToEnMap = {
               '/': '/en',
@@ -122,9 +127,9 @@ const jsonLd = {
             };
 
             if (!isPtBrowser && ptToEnMap[path]) {
-              window.location.replace(ptToEnMap[path]);
+              window.location.replace(basePath + ptToEnMap[path]);
             } else if (isPtBrowser && enToPtMap[path]) {
-              window.location.replace(enToPtMap[path]);
+              window.location.replace(basePath + enToPtMap[path]);
             }
           }
         } catch (e) {}
