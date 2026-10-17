@@ -3,6 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import WeatherWidget from '../components/WeatherWidget.astro';
+import { url } from '../utils/paths';
 ---
 
 <BaseLayout
@@ -552,7 +553,7 @@ import WeatherWidget from '../components/WeatherWidget.astro';
         </p>
         <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 font-sans">
           <a
-            href="/acomodacoes"
+            href={url('/acomodacoes')}
             class="inline-flex items-center gap-1.5 px-6 py-3.5 rounded-full bg-white text-[#0B357B] hover:bg-cobalt-50 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
           >
             <span>Ver Acomodações & Preços</span>

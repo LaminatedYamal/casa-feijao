@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { rooms } from '../../data/rooms';
+import { url } from '../../utils/paths';
 ---
 
 <BaseLayout
@@ -97,13 +98,13 @@ import { rooms } from '../../data/rooms';
           <!-- Bottom Action -->
           <div class="p-6 sm:p-8 pt-0 space-y-2">
             <a
-              href={`/acomodacoes/${room.slug}`}
+              href={url(`/acomodacoes/${room.slug}`)}
               class="block w-full py-3 text-center rounded-xl bg-[#0B357B] hover:bg-cobalt-900 text-white text-xs font-bold uppercase tracking-wider shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               Ver Galeria Completa & Reservar →
             </a>
             <a
-              href={`/contactos?quarto=${room.slug}#reserva`}
+              href={url(`/contactos?quarto=${room.slug}#reserva`)}
               class="block w-full py-2 text-center rounded-xl bg-white border border-cobalt-200 hover:bg-cobalt-50 text-[#0B357B] text-xs font-semibold transition-colors"
             >
               Pedir Disponibilidade Direta
@@ -283,7 +284,7 @@ import { rooms } from '../../data/rooms';
             <span>Reservar por WhatsApp (+351 933 176 678)</span>
           </a>
           <a
-            href="/contactos#reserva"
+            href={url('/contactos#reserva')}
             class="inline-flex items-center gap-1.5 px-6 py-3 rounded-full bg-white text-[#0B357B] hover:bg-cobalt-50 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
           >
             <span>Formulário de Contacto</span>

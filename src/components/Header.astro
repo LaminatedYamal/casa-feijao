@@ -3,6 +3,7 @@
 import { CasaFeijaoLogoLockup } from './CasaFeijaoLogoLockup';
 import { ActualWeatherWidget } from './ActualWeatherWidget';
 import { MobileHeaderMenu } from './MobileHeaderMenu';
+import { url } from '../utils/paths';
 
 interface Props {
   lang?: 'pt' | 'en';
@@ -13,11 +14,11 @@ interface Props {
 const { lang = 'pt', currentPath = '', isHeroMuralPage = false } = Astro.props;
 const isPt = lang === 'pt';
 
-const accommodationsHref = isPt ? '/acomodacoes' : '/en/accommodations';
-const geresHref = isPt ? '/geres' : '/en/geres';
-const facilitiesHref = isPt ? '/facilidades' : '/en/facilities';
-const contactsHref = isPt ? '/contactos' : '/en/contact';
-const homeHref = isPt ? '/' : '/en';
+const accommodationsHref = url(isPt ? '/acomodacoes' : '/en/accommodations');
+const geresHref = url(isPt ? '/geres' : '/en/geres');
+const facilitiesHref = url(isPt ? '/facilidades' : '/en/facilities');
+const contactsHref = url(isPt ? '/contactos' : '/en/contact');
+const homeHref = url(isPt ? '/' : '/en');
 ---
 
 {/* Render header on all subpages. Homepage has the animated Azulejo Mural entrance */}
@@ -47,21 +48,21 @@ const homeHref = isPt ? '/' : '/en';
           <div class="absolute top-full left-0 pt-1.5 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
             <div class="bg-white rounded-2xl shadow-xl border border-cobalt-100 py-2 px-1 min-w-[210px]">
               <a
-                href={isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio'}
+                href={url(isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio')}
                 class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
               >
                 <span>{isPt ? 'Estúdio' : 'Studio'}</span>
                 <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">70€</span>
               </a>
               <a
-                href={isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1'}
+                href={url(isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1')}
                 class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
               >
                 <span>{isPt ? 'Apartamento T1' : 'Apartment T1'}</span>
                 <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">95€</span>
               </a>
               <a
-                href={isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3'}
+                href={url(isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3')}
                 class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
               >
                 <span>{isPt ? 'Apartamento T3' : 'Apartment T3'}</span>

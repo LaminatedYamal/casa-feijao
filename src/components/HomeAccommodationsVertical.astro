@@ -2,6 +2,7 @@
 // src/components/HomeAccommodationsVertical.astro
 import { rooms } from '../data/rooms';
 import RoomAmenitiesList from './RoomAmenitiesList.astro';
+import { url } from '../utils/paths';
 
 interface Props {
   lang?: 'pt' | 'en';
@@ -9,7 +10,7 @@ interface Props {
 
 const { lang = 'pt' } = Astro.props;
 const isPt = lang === 'pt';
-const allAccommodationsUrl = isPt ? '/acomodacoes' : '/en/accommodations';
+const allAccommodationsUrl = url(isPt ? '/acomodacoes' : '/en/accommodations');
 ---
 
 <section class="py-20 bg-porcelain border-b border-cobalt-100">

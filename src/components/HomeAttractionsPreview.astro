@@ -1,12 +1,14 @@
 ---
 // src/components/HomeAttractionsPreview.astro
+import { url } from '../utils/paths';
+
 interface Props {
   lang?: 'pt' | 'en';
 }
 
 const { lang = 'pt' } = Astro.props;
 const isPt = lang === 'pt';
-const geresUrl = isPt ? '/geres' : '/en/geres';
+const geresUrl = url(isPt ? '/geres' : '/en/geres');
 
 const attractions = [
   {
@@ -16,7 +18,7 @@ const attractions = [
       ? 'Águas cristalinas verde-esmeralda e imponentes cascatas de montanha ideais para banhos revigorantes em plena serra.'
       : 'Emerald mountain lagoons and dramatic granite cascades, perfect for invigorating dips in protected nature.',
     badge: isPt ? '3.7 km • Poço Azul' : '3.7 km • Secret Lagoons',
-    image: '/images/_poco_azul_geres.jpg',
+    image: url('/images/_poco_azul_geres.jpg'),
   },
   {
     title: isPt ? 'Praia Fluvial da Caniçada' : 'Caniçada River Beach & Lake',
@@ -25,7 +27,7 @@ const attractions = [
       ? 'Praia de albufeira com águas calmas para banhos, aluguer de kayaks, passeios de barco e marina a escassos passos.'
       : 'Warm lake beach with calm waters for swimming, kayak rentals, scenic boat tours, and water sports at your doorstep.',
     badge: isPt ? '6 Min a pé • Rio Caldo' : '6 Min walk • Marina & Beach',
-    image: '/images/_Praia-Rio-Caldo-1.jpg',
+    image: url('/images/_Praia-Rio-Caldo-1.jpg'),
   },
   {
     title: isPt ? 'Termas do Gerês & Torneros' : 'Gerês & Torneros Thermal Baths',
@@ -34,7 +36,7 @@ const attractions = [
       ? 'Piscinas termais naturais a céu aberto e histórica estância termal no vale, proporcionando relaxamento medicinal profundo.'
       : 'Natural outdoor hot thermal pools and historic alpine spa waters in the valley for complete body rejuvenation.',
     badge: isPt ? 'Termalismo • Spa Natural' : 'Hot Springs • Natural Spa',
-    image: '/images/_TornerosAguasquentes3.jpg',
+    image: url('/images/_TornerosAguasquentes3.jpg'),
   },
 ];
 ---

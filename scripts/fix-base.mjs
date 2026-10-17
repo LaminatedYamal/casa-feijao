@@ -32,14 +32,6 @@ function processDir(currentDir) {
         content = content.replace(/href="\/#/g, `href="${base}/#`);
       }
 
-      // 4. Fix JS bundle literals for routes if needed
-      if (entry.name.endsWith('.js')) {
-        content = content.replace(/["']\/(acomodacoes|geres|facilidades|contactos)(\/|["'])/g, (match, p1, p2) => {
-          const quote = match[0];
-          return `${quote}${base}/${p1}${p2}`;
-        });
-      }
-
       if (content !== original) {
         fs.writeFileSync(fullPath, content, 'utf-8');
         console.log(`Updated paths in: ${path.relative(outDir, fullPath)}`);

@@ -131,16 +131,17 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
         </div>
       </div>
 
-      <!-- Right: Scrolling Reviews Strip (Shortened pills that smoothly expand inline on hover) -->
-      <div class="flex-1 w-full overflow-hidden py-3">
-        <div class="flex items-center gap-4 animate-ticker hover:[animation-play-state:paused] w-max">
+      <!-- Right: Scrolling Reviews Strip (Stops on click, expands review smoothly, resumes on close) -->
+      <div class="flex-1 w-full overflow-hidden py-3" id="booking-reviews-container">
+        <div class="flex items-center gap-4 animate-ticker hover:[animation-play-state:paused] w-max" id="booking-ticker-track">
           {tickerReviews.map((rev) => (
-            <div
-              tabindex="0"
-              class="group/card shrink-0 cursor-pointer inline-flex flex-col justify-center px-4 py-2.5 rounded-2xl bg-[#FAFBFD] hover:bg-white border border-cobalt-200/90 hover:border-[#003580] shadow-2xs hover:shadow-xl transition-all duration-300 w-[240px] hover:w-[380px] focus:w-[380px]"
+            <button
+              type="button"
+              class="review-card group/card shrink-0 cursor-pointer inline-flex flex-col justify-center px-4 py-2.5 rounded-2xl bg-[#FAFBFD] hover:bg-white border border-cobalt-200/90 hover:border-[#003580] shadow-2xs hover:shadow-xl transition-all duration-300 w-[240px] text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-[#0B357B]"
+              aria-expanded="false"
             >
               <!-- Compact Shortened Pill (Always visible) -->
-              <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center justify-between gap-2 w-full">
                 <div class="flex items-center gap-2 overflow-hidden">
                   <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold flex items-center justify-center shrink-0">
                     {rev.rating}
@@ -153,7 +154,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
                     {rev.country}
                   </span>
                 </div>
-                <span class="text-[#0B357B] shrink-0 group-hover/card:rotate-180 transition-transform duration-300">
+                <span class="chevron-icon text-[#0B357B] shrink-0 transition-transform duration-300">
                   <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 256 256">
                     <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/>
                   </svg>
@@ -161,7 +162,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
               </div>
 
               <!-- Inline Expanded Review Text (Zero popup clipping, silky smooth CSS grid transition) -->
-              <div class="grid grid-rows-[0fr] group-hover/card:grid-rows-[1fr] group-focus/card:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+              <div class="review-details grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out w-full">
                 <div class="overflow-hidden">
                   <p class="text-xs sm:text-[13px] text-slate-900 font-medium font-sans pt-2.5 border-t border-cobalt-200 mt-2.5 leading-relaxed">
                     "{rev.text}"
@@ -172,7 +173,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -195,4 +196,91 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
     display: flex;
     animation: ticker-scroll 60s linear infinite;
   }
+
+  /* When review is clicked and expanded, stop ticker movement completely */
+  .animate-ticker.ticker-paused {
+    animation-play-state: paused !important;
+  }
+
+  /* Desktop hover preview (only when not locked open) */
+  @media (hover: hover) and (pointer: fine) {
+    .review-card:hover:not(.is-expanded) {
+      width: 340px;
+    }
+    .review-card:hover:not(.is-expanded) .review-details {
+      grid-template-rows: 1fr;
+    }
+    .review-card:hover:not(.is-expanded) .chevron-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Click-expanded locked state */
+  .review-card.is-expanded {
+    width: 380px !important;
+    max-width: 85vw !important;
+    background-color: #ffffff !important;
+    border-color: #003580 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 53, 128, 0.15), 0 8px 10px -6px rgba(0, 53, 128, 0.1) !important;
+  }
+
+  .review-card.is-expanded .review-details {
+    grid-template-rows: 1fr !important;
+  }
+
+  .review-card.is-expanded .chevron-icon {
+    transform: rotate(180deg) !important;
+    color: #003580 !important;
+  }
 </style>
+
+<script is:inline>
+  function initBookingReviews() {
+    const track = document.getElementById('booking-ticker-track');
+    if (!track) return;
+
+    const cards = track.querySelectorAll('.review-card');
+    let currentExpanded = null;
+
+    cards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if (card.classList.contains('is-expanded')) {
+          // Close it and resume ticker movement
+          card.classList.remove('is-expanded');
+          card.setAttribute('aria-expanded', 'false');
+          currentExpanded = null;
+          track.classList.remove('ticker-paused');
+        } else {
+          // Close any other open review
+          if (currentExpanded && currentExpanded !== card) {
+            currentExpanded.classList.remove('is-expanded');
+            currentExpanded.setAttribute('aria-expanded', 'false');
+          }
+          // Expand this review and lock the carousel stopped
+          card.classList.add('is-expanded');
+          card.setAttribute('aria-expanded', 'true');
+          currentExpanded = card;
+          track.classList.add('ticker-paused');
+        }
+      });
+    });
+
+    // Close and resume moving when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (currentExpanded && !track.contains(e.target)) {
+        currentExpanded.classList.remove('is-expanded');
+        currentExpanded.setAttribute('aria-expanded', 'false');
+        currentExpanded = null;
+        track.classList.remove('ticker-paused');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBookingReviews);
+  } else {
+    initBookingReviews();
+  }
+</script>

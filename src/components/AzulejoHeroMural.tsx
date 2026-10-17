@@ -4,6 +4,7 @@ import { CenterLogoAzulejoTile } from './CenterLogoAzulejoTile';
 import { CasaFeijaoLogoLockup } from './CasaFeijaoLogoLockup';
 import { ActualWeatherWidget } from './ActualWeatherWidget';
 import { MobileHeaderMenu } from './MobileHeaderMenu';
+import { url } from '../utils/paths';
 
 interface AzulejoHeroMuralProps {
   lang?: 'pt' | 'en';
@@ -103,7 +104,7 @@ export const AzulejoHeroMural: React.FC<AzulejoHeroMuralProps> = ({ lang = 'pt' 
           <div className="hidden md:flex flex-1 items-center justify-start gap-3.5 lg:gap-6 xl:gap-7">
             <div className="relative group py-2">
               <a
-                href={isPt ? '/acomodacoes' : '/en/accommodations'}
+                href={url(isPt ? '/acomodacoes' : '/en/accommodations')}
                 className="text-xs sm:text-sm font-semibold text-granite-700 hover:text-[#0B357B] transition-colors flex items-center gap-1"
               >
                 <span>{isPt ? 'Acomodações' : 'Accommodations'}</span>
@@ -115,21 +116,21 @@ export const AzulejoHeroMural: React.FC<AzulejoHeroMuralProps> = ({ lang = 'pt' 
               <div className="absolute top-full left-0 pt-1.5 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
                 <div className="bg-white rounded-2xl shadow-xl border border-cobalt-100 py-2 px-1 min-w-[210px]">
                   <a
-                    href={isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio'}
+                    href={url(isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio')}
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
                   >
                     <span>{isPt ? 'Estúdio' : 'Studio'}</span>
                     <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">70€</span>
                   </a>
                   <a
-                    href={isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1'}
+                    href={url(isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1')}
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
                   >
                     <span>{isPt ? 'Apartamento T1' : 'Apartment T1'}</span>
                     <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">95€</span>
                   </a>
                   <a
-                    href={isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3'}
+                    href={url(isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3')}
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-granite-700 hover:text-[#0B357B] hover:bg-cobalt-50/70 transition-colors"
                   >
                     <span>{isPt ? 'Apartamento T3' : 'Apartment T3'}</span>
@@ -137,7 +138,7 @@ export const AzulejoHeroMural: React.FC<AzulejoHeroMuralProps> = ({ lang = 'pt' 
                   </a>
                   <div className="my-1 border-t border-cobalt-50"></div>
                   <a
-                    href={isPt ? '/acomodacoes' : '/en/accommodations'}
+                    href={url(isPt ? '/acomodacoes' : '/en/accommodations')}
                     className="block px-3 py-1.5 text-[11px] font-bold text-[#0B357B] hover:underline"
                   >
                     {isPt ? 'Ver Todas as Acomodações →' : 'View All Accommodations →'}
@@ -147,19 +148,19 @@ export const AzulejoHeroMural: React.FC<AzulejoHeroMuralProps> = ({ lang = 'pt' 
             </div>
 
             <a
-              href={isPt ? '/geres' : '/en/geres'}
+              href={url(isPt ? '/geres' : '/en/geres')}
               className="text-xs sm:text-sm font-semibold text-granite-700 hover:text-[#0B357B] transition-colors"
             >
               {isPt ? 'Guia do Gerês' : 'Gerês Guide'}
             </a>
             <a
-              href={isPt ? '/facilidades' : '/en/facilities'}
+              href={url(isPt ? '/facilidades' : '/en/facilities')}
               className="text-xs sm:text-sm font-semibold text-granite-700 hover:text-[#0B357B] transition-colors"
             >
               {isPt ? 'Facilidades' : 'Facilities'}
             </a>
             <a
-              href={isPt ? '/contactos' : '/en/contact'}
+              href={url(isPt ? '/contactos' : '/en/contact')}
               className="text-xs sm:text-sm font-semibold text-granite-700 hover:text-[#0B357B] transition-colors"
             >
               {isPt ? 'Contactos' : 'Contacts'}
@@ -191,7 +192,7 @@ export const AzulejoHeroMural: React.FC<AzulejoHeroMuralProps> = ({ lang = 'pt' 
 
             {/* Mobile Drawer Hamburger Menu */}
             <div className="md:hidden">
-              <MobileHeaderMenu lang={lang} currentPath={isPt ? '/' : '/en'} />
+              <MobileHeaderMenu lang={lang} currentPath={url(isPt ? '/' : '/en')} />
             </div>
           </div>
         </div>

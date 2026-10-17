@@ -1,5 +1,7 @@
 ---
 // src/components/Breadcrumbs.astro
+import { url } from '../utils/paths';
+
 export interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -14,11 +16,14 @@ interface Props {
 const { items, lang = 'pt', className = '' } = Astro.props;
 const isPt = lang === 'pt';
 const homeLabel = isPt ? 'Início' : 'Home';
-const homeHref = isPt ? '/' : '/en';
+const homeHref = url(isPt ? '/' : '/en');
 
 const allItems = [
   { label: homeLabel, href: homeHref },
-  ...items,
+  ...items.map((item) => ({
+    ...item,
+    href: item.href ? url(item.href) : undefined,
+  })),
 ];
 
 // Schema.org BreadcrumbList

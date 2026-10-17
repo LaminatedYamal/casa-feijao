@@ -11,6 +11,7 @@ import {
   CaretRight,
 } from '@phosphor-icons/react';
 import { ActualWeatherWidget } from './ActualWeatherWidget';
+import { url } from '../utils/paths';
 
 interface MobileHeaderMenuProps {
   lang?: 'pt' | 'en';
@@ -59,27 +60,27 @@ export const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
     };
   }, [isOpen]);
 
-  const homeHref = isPt ? '/' : '/en';
-  const accommodationsHref = isPt ? '/acomodacoes' : '/en/accommodations';
-  const geresHref = isPt ? '/geres' : '/en/geres';
-  const facilitiesHref = isPt ? '/facilidades' : '/en/facilities';
-  const contactsHref = isPt ? '/contactos' : '/en/contact';
+  const homeHref = url(isPt ? '/' : '/en');
+  const accommodationsHref = url(isPt ? '/acomodacoes' : '/en/accommodations');
+  const geresHref = url(isPt ? '/geres' : '/en/geres');
+  const facilitiesHref = url(isPt ? '/facilidades' : '/en/facilities');
+  const contactsHref = url(isPt ? '/contactos' : '/en/contact');
 
   const rooms = [
     {
       title: isPt ? 'Estúdio de Montanha' : 'Mountain Studio',
       price: '70€',
-      href: isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio',
+      href: url(isPt ? '/acomodacoes/estudio' : '/en/accommodations/estudio'),
     },
     {
       title: isPt ? 'Apartamento T1' : 'Apartment T1',
       price: '80€',
-      href: isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1',
+      href: url(isPt ? '/acomodacoes/apartamento-t1' : '/en/accommodations/apartamento-t1'),
     },
     {
       title: isPt ? 'Apartamento T3' : 'Apartment T3',
       price: '180€',
-      href: isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3',
+      href: url(isPt ? '/acomodacoes/apartamento-t3' : '/en/accommodations/apartamento-t3'),
     },
   ];
 

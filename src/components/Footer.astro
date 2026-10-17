@@ -1,5 +1,6 @@
 ---
 import { CasaFeijaoLogoLockup } from './CasaFeijaoLogoLockup';
+import { url } from '../utils/paths';
 
 interface Props {
   lang?: 'pt' | 'en';
@@ -17,7 +18,7 @@ const isPt = lang === 'pt';
     <!-- Centered Brand Medallion (Mimics Header) -->
     <div class="flex flex-col items-center justify-center pb-12 border-b border-cobalt-100/80">
       <a
-        href={isPt ? '/' : '/en'}
+        href={url(isPt ? '/' : '/en')}
         class="group flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95 duration-200"
         title={isPt ? 'Casa Feijão • Início' : 'Casa Feijão • Home'}
       >
@@ -59,7 +60,7 @@ const isPt = lang === 'pt';
         </p>
         <div class="pt-1">
           <a
-            href={isPt ? '/geres' : '/en/geres'}
+            href={url(isPt ? '/geres' : '/en/geres')}
             class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cobalt-50 hover:bg-[#0B357B] text-[#0B357B] hover:text-white font-bold text-xs transition-colors duration-200 border border-cobalt-200 group"
           >
             <span>{isPt ? 'Explorar Guia do Gerês' : 'Explore Gerês Guide'}</span>
