@@ -98,7 +98,7 @@ const reviewsEn = [
 ];
 
 const baseReviews = isPt ? reviewsPt : reviewsEn;
-// Quadruple array for seamless infinite marquee ticker on 3440px Ultrawide & 4K displays
+// Quadruple array for seamless infinite marquee scrolling
 const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseReviews];
 ---
 
@@ -131,9 +131,15 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
         </div>
       </div>
 
-      <!-- Right: Scrolling Reviews Strip (Stops on click, expands review smoothly, resumes on close) -->
-      <div class="flex-1 w-full overflow-hidden py-3" id="booking-reviews-container">
-        <div class="flex items-center gap-4 animate-ticker hover:[animation-play-state:paused] w-max" id="booking-ticker-track">
+      <!-- Right: Native Touch Swipeable & Drag-scroll Reviews Track -->
+      <div
+        class="reviews-scroll-container flex-1 w-full py-3 cursor-grab active:cursor-grabbing select-none"
+        id="booking-reviews-container"
+        tabindex="0"
+        role="region"
+        aria-label={isPt ? "Avaliações de hóspedes no Booking.com (deslize com o dedo)" : "Booking.com guest reviews (swipe to scroll)"}
+      >
+        <div class="flex items-center gap-4 w-max pr-6 py-1" id="booking-ticker-track">
           {tickerReviews.map((rev) => (
             <button
               type="button"
@@ -183,29 +189,33 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
 </section>
 
 <style>
-  @keyframes ticker-scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+  /* Native touch-scroll container with hidden scrollbars */
+  .reviews-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  .animate-ticker {
-    display: flex;
-    animation: ticker-scroll 60s linear infinite;
+  .reviews-scroll-container::-webkit-scrollbar {
+    display: none;
   }
 
-  /* When review is clicked and expanded, stop ticker movement completely */
-  .animate-ticker.ticker-paused {
-    animation-play-state: paused !important;
+  /* Prevent text highlighting during drag/swipe */
+  .review-card {
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 
-  /* Desktop hover preview (only when not locked open) */
+  /* Desktop hover preview (only when not clicked open) */
   @media (hover: hover) and (pointer: fine) {
     .review-card:hover:not(.is-expanded) {
-      width: 340px;
+      width: 330px;
     }
     .review-card:hover:not(.is-expanded) .review-details {
       grid-template-rows: 1fr;
@@ -218,7 +228,7 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
   /* Click-expanded locked state */
   .review-card.is-expanded {
     width: 380px !important;
-    max-width: 85vw !important;
+    max-width: 82vw !important;
     background-color: #ffffff !important;
     border-color: #003580 !important;
     box-shadow: 0 20px 25px -5px rgba(0, 53, 128, 0.15), 0 8px 10px -6px rgba(0, 53, 128, 0.1) !important;
@@ -236,44 +246,154 @@ const tickerReviews = [...baseReviews, ...baseReviews, ...baseReviews, ...baseRe
 
 <script is:inline>
   function initBookingReviews() {
+    const container = document.getElementById('booking-reviews-container');
     const track = document.getElementById('booking-ticker-track');
-    if (!track) return;
+    if (!container || !track) return;
 
     const cards = track.querySelectorAll('.review-card');
-    let currentExpanded = null;
+    let currentExpandedCard = null;
+    let isPaused = false;
+    let isInteracting = false;
+    let resumeTimeout = null;
 
+    // Gentle auto-drift speed (pixels per frame)
+    const driftSpeed = 0.55;
+
+    // Seamless infinite looping RAF
+    let rafId = null;
+    function drift() {
+      if (!isPaused && !isInteracting) {
+        container.scrollLeft += driftSpeed;
+        const halfWidth = track.scrollWidth / 2;
+        if (container.scrollLeft >= halfWidth) {
+          container.scrollLeft -= halfWidth;
+        }
+      }
+      rafId = requestAnimationFrame(drift);
+    }
+    rafId = requestAnimationFrame(drift);
+
+    // Track finger / mouse gestures
+    let isPointerDown = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let hasDragged = false;
+
+    container.addEventListener('pointerdown', (e) => {
+      isPointerDown = true;
+      hasDragged = false;
+      startX = e.clientX;
+      scrollStart = container.scrollLeft;
+      isInteracting = true;
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+    });
+
+    container.addEventListener('pointermove', (e) => {
+      if (!isPointerDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) {
+        hasDragged = true;
+      }
+      // Mouse drag scroll on desktop
+      if (e.pointerType === 'mouse' && hasDragged) {
+        container.scrollLeft = scrollStart - dx;
+      }
+    });
+
+    const handlePointerEnd = () => {
+      if (!isPointerDown) return;
+      isPointerDown = false;
+
+      // Wrap check on manual swipe
+      const halfWidth = track.scrollWidth / 2;
+      if (container.scrollLeft >= halfWidth) {
+        container.scrollLeft -= halfWidth;
+      } else if (container.scrollLeft <= 0) {
+        container.scrollLeft += halfWidth;
+      }
+
+      // Resume auto-drift if no review is open
+      if (!currentExpandedCard) {
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+          isInteracting = false;
+        }, 1500);
+      }
+    };
+
+    container.addEventListener('pointerup', handlePointerEnd);
+    container.addEventListener('pointercancel', handlePointerEnd);
+    container.addEventListener('pointerleave', (e) => {
+      if (e.pointerType === 'mouse') handlePointerEnd();
+    });
+
+    // Touch inertia / wheel listener
+    container.addEventListener('scroll', () => {
+      if (isPointerDown) {
+        isInteracting = true;
+      }
+    }, { passive: true });
+
+    // Review card click / tap
     cards.forEach((card) => {
       card.addEventListener('click', (e) => {
+        // If the user was dragging/swiping with their finger, do not toggle the card!
+        if (hasDragged) {
+          hasDragged = false;
+          return;
+        }
+
         e.stopPropagation();
 
         if (card.classList.contains('is-expanded')) {
-          // Close it and resume ticker movement
+          // Collapse card and resume drift
           card.classList.remove('is-expanded');
           card.setAttribute('aria-expanded', 'false');
-          currentExpanded = null;
-          track.classList.remove('ticker-paused');
+          currentExpandedCard = null;
+          isPaused = false;
+          if (resumeTimeout) clearTimeout(resumeTimeout);
+          resumeTimeout = setTimeout(() => {
+            isInteracting = false;
+          }, 1200);
         } else {
-          // Close any other open review
-          if (currentExpanded && currentExpanded !== card) {
-            currentExpanded.classList.remove('is-expanded');
-            currentExpanded.setAttribute('aria-expanded', 'false');
+          // Collapse any previously open card
+          if (currentExpandedCard && currentExpandedCard !== card) {
+            currentExpandedCard.classList.remove('is-expanded');
+            currentExpandedCard.setAttribute('aria-expanded', 'false');
           }
-          // Expand this review and lock the carousel stopped
+
+          // Expand this card
           card.classList.add('is-expanded');
           card.setAttribute('aria-expanded', 'true');
-          currentExpanded = card;
-          track.classList.add('ticker-paused');
+          currentExpandedCard = card;
+          isPaused = true;
+          isInteracting = true;
+
+          // Smoothly center the expanded card in the container so it's never cut off
+          setTimeout(() => {
+            const containerWidth = container.clientWidth;
+            const cardWidth = card.offsetWidth;
+            const target = card.offsetLeft - (containerWidth - cardWidth) / 2;
+            container.scrollTo({
+              left: Math.max(0, target),
+              behavior: 'smooth'
+            });
+          }, 60);
         }
       });
     });
 
-    // Close and resume moving when clicking anywhere outside
+    // Tap outside to collapse
     document.addEventListener('click', (e) => {
-      if (currentExpanded && !track.contains(e.target)) {
-        currentExpanded.classList.remove('is-expanded');
-        currentExpanded.setAttribute('aria-expanded', 'false');
-        currentExpanded = null;
-        track.classList.remove('ticker-paused');
+      if (currentExpandedCard && !track.contains(e.target)) {
+        currentExpandedCard.classList.remove('is-expanded');
+        currentExpandedCard.setAttribute('aria-expanded', 'false');
+        currentExpandedCard = null;
+        isPaused = false;
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+          isInteracting = false;
+        }, 1200);
       }
     });
   }
