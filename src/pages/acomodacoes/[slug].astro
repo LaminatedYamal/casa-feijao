@@ -126,7 +126,7 @@ const { room } = Astro.props;
       </div>
 
       <!-- Right Column: Booking Box Sticky with Sidebar Layout -->
-      <div class="lg:col-span-5" id="reservar">
+      <div class="lg:col-span-5 scroll-mt-28" id="reservar">
         <div class="sticky top-28 space-y-6">
           <BookingBar client:load lang="pt" defaultRoomId={room.id} layout="sidebar" />
         </div>

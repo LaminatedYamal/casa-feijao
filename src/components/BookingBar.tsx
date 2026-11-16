@@ -117,130 +117,27 @@ export const BookingBar: React.FC<BookingBarProps> = ({
           )}
         </div>
 
-        {/* 
-          MOBILE & TABLET INPUT CAPSULE (< lg:)
-          Grouped, elegant, Apple-style segmented inputs:
-          - Zero smushing
-          - Check-in & Check-out unified in a generous two-sided capsule with hairline divider
-          - High-contrast typography and instant native date picker tap trigger
-        */}
-        <div className="lg:hidden space-y-2">
-          {/* Accommodation Selector */}
-          <div className="bg-granite-50/90 hover:bg-white border border-cobalt-200/80 rounded-xl px-3 py-2 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1.5 font-sans mb-0.5">
-              <House size={12} weight="bold" className="text-[#0B357B]" />
-              <span>{isPt ? 'Acomodação' : 'Accommodation'}</span>
-            </label>
-            <select
-              value={selectedRoomId}
-              onChange={(e) => setSelectedRoomId(e.target.value)}
-              className="w-full bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer py-0.5"
-            >
-              {rooms.map((room) => (
-                <option key={room.id} value={room.id}>
-                  {isPt ? room.titlePt : room.titleEn} ({room.pricePerNight}€/noite)
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* UNIFIED DATE RANGE CAPSULE (Left: Check-In, Right: Check-Out) */}
-          <div className="bg-granite-50/90 border border-cobalt-200/80 rounded-xl grid grid-cols-2 divide-x divide-cobalt-200/80 overflow-hidden relative">
-            {/* Check-In Half */}
-            <div className="relative px-3 py-2 flex flex-col justify-center min-w-0 active:bg-cobalt-50/60 transition-colors">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
-                <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
-                <span>{isPt ? 'Entrada' : 'Check-In'}</span>
-              </span>
-              <span className="text-xs sm:text-sm font-semibold text-cobalt-950 mt-0.5 truncate">
-                {formatShortDate(checkIn, isPt)}
-              </span>
-              {/* Invisible full-bleed native date input overlay */}
-              <input
-                type="date"
-                value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
-                aria-label={isPt ? 'Data de Entrada' : 'Check-in Date'}
-              />
-            </div>
-
-            {/* Check-Out Half */}
-            <div className="relative px-3 py-2 flex flex-col justify-center min-w-0 active:bg-cobalt-50/60 transition-colors">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
-                <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
-                <span>{isPt ? 'Saída' : 'Check-Out'}</span>
-              </span>
-              <span className="text-xs sm:text-sm font-semibold text-cobalt-950 mt-0.5 truncate">
-                {formatShortDate(checkOut, isPt)}
-              </span>
-              {/* Invisible full-bleed native date input overlay */}
-              <input
-                type="date"
-                value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
-                aria-label={isPt ? 'Data de Saída' : 'Check-out Date'}
-              />
-            </div>
-          </div>
-
-          {/* Guests Capsule (Left: Adults, Right: Kids) */}
-          <div className="bg-granite-50/90 border border-cobalt-200/80 rounded-xl grid grid-cols-2 divide-x divide-cobalt-200/80 overflow-hidden">
-            <div className="px-3 py-2 flex items-center justify-between min-w-0">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
-                <Users size={12} weight="bold" className="text-[#0B357B]" />
-                <span>{isPt ? 'Adultos' : 'Adults'}</span>
-              </span>
-              <select
-                value={adults}
-                onChange={(e) => setAdults(Number(e.target.value))}
-                className="bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer pl-2"
-              >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="px-3 py-2 flex items-center justify-between min-w-0">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
-                <Users size={12} weight="bold" className="text-[#0B357B]" />
-                <span>{isPt ? 'Crianças' : 'Kids'}</span>
-              </span>
-              <select
-                value={children}
-                onChange={(e) => setChildren(Number(e.target.value))}
-                className="bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer pl-2"
-              >
-                {[0, 1, 2, 3, 4].map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* 
-          DESKTOP INPUTS BAR (lg: and above)
-          Original 4-column layout preserving ultrawide & desktop elegance
-        */}
-        <div className="hidden lg:grid grid-cols-4 gap-4">
-          {/* Room Selection */}
-          <div className="space-y-1 min-w-0">
-            <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
-              <House size={14} weight="bold" className="text-[#0B357B] shrink-0" />
-              <span>{isPt ? 'Acomodação' : 'Accommodation'}</span>
-            </label>
-            <div className="relative min-w-0">
+        {isSidebar ? (
+          /* ===============================================================
+             SIDEBAR LAYOUT (For Room Detail Pages)
+             Optimized for narrow containers (~400px):
+             - 1 full-width accommodation row
+             - 2-column dates (Check-in & Check-out) with zero text truncation
+             - 2-column guests (Adults & Children)
+             - Prominent full-width WhatsApp CTA button
+             - Clean full-width direct phone link
+             =============================================================== */
+          <div className="space-y-3.5">
+            {/* Accommodation Selector */}
+            <div className="bg-granite-50/90 hover:bg-white border border-cobalt-200/90 rounded-2xl px-4 py-2.5 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30 shadow-2xs">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1.5 font-sans mb-1">
+                <House size={13} weight="bold" className="text-[#0B357B]" />
+                <span>{isPt ? 'Acomodação' : 'Accommodation'}</span>
+              </label>
               <select
                 value={selectedRoomId}
                 onChange={(e) => setSelectedRoomId(e.target.value)}
-                className="w-full min-w-0 max-w-full box-border px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] transition-all cursor-pointer font-sans h-10"
+                className="w-full bg-transparent text-xs sm:text-sm font-semibold text-cobalt-950 focus:outline-none cursor-pointer py-0.5"
               >
                 {rooms.map((room) => (
                   <option key={room.id} value={room.id}>
@@ -249,106 +146,380 @@ export const BookingBar: React.FC<BookingBarProps> = ({
                 ))}
               </select>
             </div>
-          </div>
 
-          {/* Check-In Date */}
-          <div className="space-y-1 min-w-0">
-            <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
-              <CalendarBlank size={14} weight="bold" className="text-[#0B357B] shrink-0" />
-              <span>{isPt ? 'Data de Chegada' : 'Check-In'}</span>
-            </label>
-            <input
-              type="date"
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              className="w-full min-w-0 max-w-full box-border px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] transition-all cursor-pointer font-sans h-10"
-            />
-          </div>
+            {/* Dates: Check-In & Check-Out (2 columns) */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {/* Check-In */}
+              <div className="relative bg-granite-50/90 hover:bg-white border border-cobalt-200/90 rounded-2xl px-3.5 py-2.5 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30 shadow-2xs cursor-pointer">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                  <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
+                  <span>{isPt ? 'Check-In' : 'Check-In'}</span>
+                </span>
+                <span className="block text-xs sm:text-sm font-semibold text-cobalt-950 mt-1 truncate">
+                  {formatShortDate(checkIn, isPt)}
+                </span>
+                <input
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                  aria-label={isPt ? 'Data de Entrada' : 'Check-in Date'}
+                />
+              </div>
 
-          {/* Check-Out Date */}
-          <div className="space-y-1 min-w-0">
-            <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
-              <CalendarBlank size={14} weight="bold" className="text-[#0B357B] shrink-0" />
-              <span>{isPt ? 'Data de Partida' : 'Check-Out'}</span>
-            </label>
-            <input
-              type="date"
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="w-full min-w-0 max-w-full box-border px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] transition-all cursor-pointer font-sans h-10"
-            />
-          </div>
+              {/* Check-Out */}
+              <div className="relative bg-granite-50/90 hover:bg-white border border-cobalt-200/90 rounded-2xl px-3.5 py-2.5 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30 shadow-2xs cursor-pointer">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                  <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
+                  <span>{isPt ? 'Check-Out' : 'Check-Out'}</span>
+                </span>
+                <span className="block text-xs sm:text-sm font-semibold text-cobalt-950 mt-1 truncate">
+                  {formatShortDate(checkOut, isPt)}
+                </span>
+                <input
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                  aria-label={isPt ? 'Data de Saída' : 'Check-out Date'}
+                />
+              </div>
+            </div>
 
-          {/* Guests */}
-          <div className="space-y-1 min-w-0">
-            <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
-              <Users size={14} weight="bold" className="text-[#0B357B] shrink-0" />
-              <span>{isPt ? 'Hóspedes' : 'Guests'}</span>
-            </label>
-            <div className="grid grid-cols-2 gap-2 min-w-0">
-              <select
-                value={adults}
-                onChange={(e) => setAdults(Number(e.target.value))}
-                className="w-full min-w-0 max-w-full box-border px-2 py-2 rounded-xl border border-granite-200 text-xs font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] font-sans h-10"
+            {/* Guests: Adults & Children (2 columns) */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {/* Adults */}
+              <div className="bg-granite-50/90 hover:bg-white border border-cobalt-200/90 rounded-2xl px-3.5 py-2 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30 shadow-2xs">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans mb-0.5">
+                  <Users size={12} weight="bold" className="text-[#0B357B]" />
+                  <span>{isPt ? 'Adultos' : 'Adults'}</span>
+                </label>
+                <select
+                  value={adults}
+                  onChange={(e) => setAdults(Number(e.target.value))}
+                  className="w-full bg-transparent text-xs sm:text-sm font-semibold text-cobalt-950 focus:outline-none cursor-pointer py-0.5"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                    <option key={n} value={n}>
+                      {n} {n === 1 ? (isPt ? 'Adulto' : 'Adult') : (isPt ? 'Adultos' : 'Adults')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Children */}
+              <div className="bg-granite-50/90 hover:bg-white border border-cobalt-200/90 rounded-2xl px-3.5 py-2 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30 shadow-2xs">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans mb-0.5">
+                  <Users size={12} weight="bold" className="text-[#0B357B]" />
+                  <span>{isPt ? 'Crianças' : 'Children'}</span>
+                </label>
+                <select
+                  value={children}
+                  onChange={(e) => setChildren(Number(e.target.value))}
+                  className="w-full bg-transparent text-xs sm:text-sm font-semibold text-cobalt-950 focus:outline-none cursor-pointer py-0.5"
+                >
+                  {[0, 1, 2, 3, 4].map((n) => (
+                    <option key={n} value={n}>
+                      {n} {n === 1 ? (isPt ? 'Criança' : 'Child') : (isPt ? 'Crianças' : 'Children')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Estimated Stay Summary (if dates chosen) */}
+            {estimatedStay && (
+              <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 flex items-center justify-between font-sans">
+                <div>
+                  <span className="font-semibold block text-xs">
+                    {estimatedStay.nights} {estimatedStay.nights === 1 ? (isPt ? 'noite' : 'night') : (isPt ? 'noites' : 'nights')} ({selectedRoom.pricePerNight}€/{isPt ? 'noite' : 'night'})
+                  </span>
+                  <span className="text-[11px] text-emerald-700 font-medium">
+                    {isPt ? 'Reserva direta sem comissões' : 'Direct booking, zero commission'}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 block">Total</span>
+                  <span className="text-lg font-black font-sans text-emerald-900">{estimatedStay.total}€</span>
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons: Full-width stacked buttons with clear hierarchy */}
+            <div className="space-y-2 pt-1">
+              {/* Primary CTA: Full-width WhatsApp button */}
+              <a
+                href={whatsAppUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.99] text-white text-xs sm:text-sm font-bold shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group font-sans"
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                  <option key={n} value={n}>
-                    {n} {isPt ? 'Adultos' : 'Adults'}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={children}
-                onChange={(e) => setChildren(Number(e.target.value))}
-                className="w-full min-w-0 max-w-full box-border px-2 py-2 rounded-xl border border-granite-200 text-xs font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] font-sans h-10"
+                <WhatsAppIcon className="w-4 h-4 fill-white shrink-0" />
+                <span>{isPt ? 'Reservar por WhatsApp' : 'Reserve via WhatsApp'}</span>
+                <ArrowRight size={14} weight="bold" className="transition-transform group-hover:translate-x-1 shrink-0 text-white" />
+              </a>
+
+              {/* Secondary CTA: Clean direct call */}
+              <a
+                href="tel:+351253391971"
+                className="w-full py-2.5 px-4 rounded-xl border border-granite-200 hover:border-cobalt-300 text-granite-700 hover:text-cobalt-900 text-xs font-semibold flex items-center justify-center gap-2 transition-colors bg-white hover:bg-cobalt-50/50 shadow-2xs font-sans"
+                title="Ligar: (+351) 253 391 971"
               >
-                {[0, 1, 2, 3, 4].map((n) => (
-                  <option key={n} value={n}>
-                    {n} {isPt ? 'Crianças' : 'Kids'}
-                  </option>
-                ))}
-              </select>
+                <PhoneCall size={14} weight="bold" className="text-[#0B357B]" />
+                <span>{isPt ? 'Dúvidas imediatas? Ligar (+351) 253 391 971' : 'Quick questions? Call (+351) 253 391 971'}</span>
+              </a>
+            </div>
+
+            {/* Trust points */}
+            <div className="pt-2 border-t border-granite-100 flex items-center justify-center gap-3 text-[11px] text-granite-600 font-sans">
+              <span className="flex items-center gap-1">
+                <CheckCircle size={13} weight="fill" className="text-emerald-500 shrink-0" />
+                <span>{isPt ? 'Cancelamento flexível' : 'Flexible cancellation'}</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle size={13} weight="fill" className="text-[#0B357B] shrink-0" />
+                <span>{isPt ? 'Wi-Fi e Parque Grátis' : 'Free Wi-Fi & Parking'}</span>
+              </span>
             </div>
           </div>
-        </div>
+        ) : (
+          /* ===============================================================
+             FULL-WIDTH / DOCKED BAR LAYOUT (For Homepage Hero)
+             =============================================================== */
+          <>
+            {/* Mobile & Tablet (< lg:) */}
+            <div className="lg:hidden space-y-2">
+              {/* Accommodation Selector */}
+              <div className="bg-granite-50/90 hover:bg-white border border-cobalt-200/80 rounded-xl px-3 py-2 transition-colors focus-within:bg-white focus-within:ring-2 focus-within:ring-[#0B357B]/30">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1.5 font-sans mb-0.5">
+                  <House size={12} weight="bold" className="text-[#0B357B]" />
+                  <span>{isPt ? 'Acomodação' : 'Accommodation'}</span>
+                </label>
+                <select
+                  value={selectedRoomId}
+                  onChange={(e) => setSelectedRoomId(e.target.value)}
+                  className="w-full bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer py-0.5"
+                >
+                  {rooms.map((room) => (
+                    <option key={room.id} value={room.id}>
+                      {isPt ? room.titlePt : room.titleEn} ({room.pricePerNight}€/noite)
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        {/* Action Bar */}
-        <div className="mt-3.5 pt-3 border-t border-granite-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
-          {/* Trust points */}
-          <div className="flex items-center justify-center sm:justify-start gap-3 text-[11px] text-granite-600 font-sans">
-            <span className="flex items-center gap-1">
-              <CheckCircle size={13} weight="fill" className="text-emerald-500 shrink-0" />
-              <span>{isPt ? 'Cancelamento flexível' : 'Flexible cancellation'}</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <CheckCircle size={13} weight="fill" className="text-[#0B357B] shrink-0" />
-              <span>{isPt ? 'Wi-Fi e Parque Grátis' : 'Free Wi-Fi & Parking'}</span>
-            </span>
-          </div>
+              {/* UNIFIED DATE RANGE CAPSULE */}
+              <div className="bg-granite-50/90 border border-cobalt-200/80 rounded-xl grid grid-cols-2 divide-x divide-cobalt-200/80 overflow-hidden relative">
+                {/* Check-In Half */}
+                <div className="relative px-3 py-2 flex flex-col justify-center min-w-0 active:bg-cobalt-50/60 transition-colors">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                    <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
+                    <span>{isPt ? 'Entrada' : 'Check-In'}</span>
+                  </span>
+                  <span className="text-xs sm:text-sm font-semibold text-cobalt-950 mt-0.5 truncate">
+                    {formatShortDate(checkIn, isPt)}
+                  </span>
+                  <input
+                    type="date"
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                    aria-label={isPt ? 'Data de Entrada' : 'Check-in Date'}
+                  />
+                </div>
 
-          {/* Buttons: Clean phone link + Full Official WhatsApp CTA */}
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <a
-              href="tel:+351253391971"
-              className="px-3 py-2.5 rounded-xl border border-granite-200 hover:border-cobalt-300 text-granite-700 hover:text-cobalt-900 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 whitespace-nowrap bg-white hover:bg-cobalt-50/50"
-              title="Ligar: 253 391 971"
-            >
-              <PhoneCall size={14} weight="bold" className="text-[#0B357B]" />
-              <span className="font-sans font-medium text-cobalt-950">253 391 971</span>
-            </a>
+                {/* Check-Out Half */}
+                <div className="relative px-3 py-2 flex flex-col justify-center min-w-0 active:bg-cobalt-50/60 transition-colors">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                    <CalendarBlank size={12} weight="bold" className="text-[#0B357B]" />
+                    <span>{isPt ? 'Saída' : 'Check-Out'}</span>
+                  </span>
+                  <span className="text-xs sm:text-sm font-semibold text-cobalt-950 mt-0.5 truncate">
+                    {formatShortDate(checkOut, isPt)}
+                  </span>
+                  <input
+                    type="date"
+                    value={checkOut}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                    aria-label={isPt ? 'Data de Saída' : 'Check-out Date'}
+                  />
+                </div>
+              </div>
 
-            <a
-              href={whatsAppUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 min-w-0 px-4 py-2.5 sm:py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all flex items-center justify-center gap-2 group font-sans truncate"
-            >
-              <WhatsAppIcon className="w-4 h-4 fill-white shrink-0" />
-              <span className="truncate">{isPt ? 'Reservar por WhatsApp' : 'Reserve via WhatsApp'}</span>
-              <ArrowRight size={14} weight="bold" className="transition-transform group-hover:translate-x-0.5 shrink-0 text-white" />
-            </a>
-          </div>
-        </div>
+              {/* Guests Capsule */}
+              <div className="bg-granite-50/90 border border-cobalt-200/80 rounded-xl grid grid-cols-2 divide-x divide-cobalt-200/80 overflow-hidden">
+                <div className="px-3 py-2 flex items-center justify-between min-w-0">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                    <Users size={12} weight="bold" className="text-[#0B357B]" />
+                    <span>{isPt ? 'Adultos' : 'Adults'}</span>
+                  </span>
+                  <select
+                    value={adults}
+                    onChange={(e) => setAdults(Number(e.target.value))}
+                    className="bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer pl-2"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="px-3 py-2 flex items-center justify-between min-w-0">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B357B] flex items-center gap-1 font-sans">
+                    <Users size={12} weight="bold" className="text-[#0B357B]" />
+                    <span>{isPt ? 'Crianças' : 'Kids'}</span>
+                  </span>
+                  <select
+                    value={children}
+                    onChange={(e) => setChildren(Number(e.target.value))}
+                    className="bg-transparent text-xs font-semibold text-cobalt-950 focus:outline-none cursor-pointer pl-2"
+                  >
+                    {[0, 1, 2, 3, 4].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Inputs Bar (lg: and above) */}
+            <div className="hidden lg:grid grid-cols-4 gap-4">
+              {/* Room Selection */}
+              <div className="space-y-1 min-w-0">
+                <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
+                  <House size={14} weight="bold" className="text-[#0B357B] shrink-0" />
+                  <span>{isPt ? 'Acomodação' : 'Accommodation'}</span>
+                </label>
+                <div className="relative min-w-0">
+                  <select
+                    value={selectedRoomId}
+                    onChange={(e) => setSelectedRoomId(e.target.value)}
+                    className="w-full min-w-0 max-w-full box-border px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] transition-all cursor-pointer font-sans h-10"
+                  >
+                    {rooms.map((room) => (
+                      <option key={room.id} value={room.id}>
+                        {isPt ? room.titlePt : room.titleEn} ({room.pricePerNight}€/noite)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Check-In Date */}
+              <div className="space-y-1 min-w-0">
+                <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
+                  <CalendarBlank size={14} weight="bold" className="text-[#0B357B] shrink-0" />
+                  <span>{isPt ? 'Data de Chegada' : 'Check-In'}</span>
+                </label>
+                <div className="relative w-full h-10 px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white flex items-center justify-between transition-all cursor-pointer font-sans">
+                  <span className="truncate">{formatShortDate(checkIn, isPt)}</span>
+                  <CalendarBlank size={15} weight="bold" className="text-granite-400 shrink-0" />
+                  <input
+                    type="date"
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    aria-label={isPt ? 'Data de Entrada' : 'Check-in Date'}
+                  />
+                </div>
+              </div>
+
+              {/* Check-Out Date */}
+              <div className="space-y-1 min-w-0">
+                <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
+                  <CalendarBlank size={14} weight="bold" className="text-[#0B357B] shrink-0" />
+                  <span>{isPt ? 'Data de Partida' : 'Check-Out'}</span>
+                </label>
+                <div className="relative w-full h-10 px-3 py-2 rounded-xl border border-granite-200 text-xs sm:text-sm font-medium text-cobalt-950 bg-granite-50 hover:bg-white flex items-center justify-between transition-all cursor-pointer font-sans">
+                  <span className="truncate">{formatShortDate(checkOut, isPt)}</span>
+                  <CalendarBlank size={15} weight="bold" className="text-granite-400 shrink-0" />
+                  <input
+                    type="date"
+                    value={checkOut}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    aria-label={isPt ? 'Data de Saída' : 'Check-out Date'}
+                  />
+                </div>
+              </div>
+
+              {/* Guests */}
+              <div className="space-y-1 min-w-0">
+                <label className="text-xs font-semibold text-cobalt-900 flex items-center gap-1.5 font-sans">
+                  <Users size={14} weight="bold" className="text-[#0B357B] shrink-0" />
+                  <span>{isPt ? 'Hóspedes' : 'Guests'}</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2 min-w-0">
+                  <select
+                    value={adults}
+                    onChange={(e) => setAdults(Number(e.target.value))}
+                    className="w-full min-w-0 max-w-full box-border px-2 py-2 rounded-xl border border-granite-200 text-xs font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] font-sans h-10"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                      <option key={n} value={n}>
+                        {n} {isPt ? 'Adultos' : 'Adults'}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={children}
+                    onChange={(e) => setChildren(Number(e.target.value))}
+                    className="w-full min-w-0 max-w-full box-border px-2 py-2 rounded-xl border border-granite-200 text-xs font-medium text-cobalt-950 bg-granite-50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B357B]/30 focus:border-[#0B357B] font-sans h-10"
+                  >
+                    {[0, 1, 2, 3, 4].map((n) => (
+                      <option key={n} value={n}>
+                        {n} {isPt ? 'Crianças' : 'Kids'}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Bar */}
+            <div className="mt-3.5 pt-3 border-t border-granite-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 flex-wrap">
+              {/* Trust points */}
+              <div className="flex items-center justify-center sm:justify-start gap-3 text-[11px] text-granite-600 font-sans">
+                <span className="flex items-center gap-1">
+                  <CheckCircle size={13} weight="fill" className="text-emerald-500 shrink-0" />
+                  <span>{isPt ? 'Cancelamento flexível' : 'Flexible cancellation'}</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle size={13} weight="fill" className="text-[#0B357B] shrink-0" />
+                  <span>{isPt ? 'Wi-Fi e Parque Grátis' : 'Free Wi-Fi & Parking'}</span>
+                </span>
+              </div>
+
+              {/* Buttons: Clean phone link + Full Official WhatsApp CTA */}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <a
+                  href="tel:+351253391971"
+                  className="px-3 py-2.5 rounded-xl border border-granite-200 hover:border-cobalt-300 text-granite-700 hover:text-cobalt-900 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 whitespace-nowrap bg-white hover:bg-cobalt-50/50"
+                  title="Ligar: 253 391 971"
+                >
+                  <PhoneCall size={14} weight="bold" className="text-[#0B357B]" />
+                  <span className="font-sans font-medium text-cobalt-950">253 391 971</span>
+                </a>
+
+                <a
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none min-w-[200px] px-4 py-2.5 sm:py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all flex items-center justify-center gap-2 group font-sans whitespace-nowrap"
+                >
+                  <WhatsAppIcon className="w-4 h-4 fill-white shrink-0" />
+                  <span>{isPt ? 'Reservar por WhatsApp' : 'Reserve via WhatsApp'}</span>
+                  <ArrowRight size={14} weight="bold" className="transition-transform group-hover:translate-x-0.5 shrink-0 text-white" />
+                </a>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
